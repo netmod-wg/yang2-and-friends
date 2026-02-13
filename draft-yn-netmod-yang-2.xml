@@ -19,8 +19,13 @@
     xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-2-latest">
 
     <front>
-    <title abbrev="YANG 1.1">The YANG 1.1 Data Modeling Language</title>
-
+    <title abbrev="YANG 2.0">The YANG 2.0 Data Modeling Language</title>
+    <author initials="K" surname="Watsen" fullname='Kent Watsen' role="editor">
+        <organization>Watsen Networks</organization>
+        <address>
+            <email>kent+ietf@watsen.net</email>
+        </address>
+    </author>
     <author initials="M" surname="Bjorklund" fullname='Martin Bjorklund' role="editor">
       <organization>Tail-f Systems</organization>
       <address>
@@ -30,8 +35,7 @@
 
     <date/>
 
-        <keyword>NETCONF</keyword>
-        <keyword>XML</keyword>
+        <keyword>yang</keyword>
         <keyword>data modeling</keyword>
 
     <abstract>
@@ -39,213 +43,60 @@
   YANG is a data modeling language used to model configuration data,
   state data, Remote Procedure Calls, and notifications for network
   management protocols. This document describes the syntax and
-  semantics of version 1.1 of the YANG language.  YANG version 1.1 is
-  a maintenance release of the YANG language, addressing ambiguities
-  and defects in the original specification.  There are a small number
-  of backward incompatibilities from YANG version 1.  This document
-  also specifies the YANG mappings to the Network Configuration
-  Protocol (NETCONF).
+  semantics of version 2.0 of the YANG language.  YANG version 2.0 is
+  a major release of the YANG language, addressing issues found in
+  the original specification.
         </t>
 </abstract>
+<note title="Production Process (to be removed by RFC Editor)">
+    <t>This document is developed on GitHub (<eref target="https://github.com/netmod-wg/yang2-and-friends"/>).
+    If you wish to contribute, please consider opening a pull request (PR).  Please see the
+    README file for details.</t>
+</note>
 </front>
 <middle>
 <section title="Introduction">
-    <t>
-YANG is a data modeling language originally designed to model
-configuration and state data manipulated by the Network Configuration
-Protocol (NETCONF), NETCONF Remote Procedure Calls, and NETCONF
-notifications <xref target="RFC6241"/>.  Since the publication of YANG
-version 1 <xref target="RFC6020"/>, YANG has been used or proposed to be
-used for other protocols (e.g., RESTCONF <xref target="RFC8040"/> and
-the Constrained Application Protocol (CoAP) Management Interface (CoMI)
-<xref target="I-D.ietf-core-comi"/>).  Further, encodings other than XML have been
-proposed (e.g., JSON <xref target="RFC7951"/>).
-    </t>
-    <t>
-This document describes the syntax and semantics of version 1.1 of the
-YANG language.  It also describes how a data model defined in a YANG
-module is encoded in the Extensible Markup Language (XML)
-<xref target="XML"/> and how NETCONF operations are used to manipulate
-the data.  Other protocols and encodings are possible but are out of scope
-for this specification.
-    </t>
-    <t>
-In terms of developing YANG data models, <xref target="RFC8407"/>
-provides some guidelines and recommendations.
-    </t>
-    <t>
-Note that this document does not obsolete RFC 6020 <xref target="RFC6020"/>.
-    </t>
-<section title="Summary of Changes from RFC 6020">
-    <t>
-This document defines version 1.1 of the YANG language.  YANG
-version&nbsp;1.1 is a maintenance release of the YANG language, addressing
-ambiguities and defects in the original specification <xref target="RFC6020"/>.
-    </t>
-    <t>
-The following changes are not backward compatible with YANG version&nbsp;1:
-    </t>
-<t>
- <list style="symbols">
- <t>
-Changed the rules for the interpretation of escaped characters in
-double-quoted strings.  This is a backward-incompatible change
-from YANG version 1.  When updating a YANG version 1 module to 1.1
-and the module uses a character sequence that is now illegal, the
-string must be changed to match the new rules.
-See <xref target="quoting"/> for details.
- </t>
- <t>
-An unquoted string cannot contain any single or double quote
-characters.  This is a backward-incompatible change from YANG
-version 1.  When updating a YANG version 1 module to 1.1 and the
-module uses such quote characters, the string must be changed to match
-the new rules.  See <xref target="quoting"/> for details.
- </t>
- <t>
-Made &quot;when&quot; and &quot;if&#8209;feature&quot; illegal on list keys.
-This is a backward-incompatible change from YANG version 1.  When updating a
-YANG version 1 module to 1.1 and the module uses these constructs,
-they must be removed to match the new rules.
- </t>
- <t>
-Defined the legal characters in YANG modules.  When updating a
-YANG version 1 module to 1.1, any characters that are now illegal
-must be removed.  See <xref target="syntax"/> for  details.
- </t>
- <t>
-Made noncharacters illegal in the built-in type &quot;string&quot;.  This
-change affects the runtime behavior of YANG-based protocols.
- </t>
- </list>
-</t>
-    <t>
-The following additional changes have been done to YANG:
-    </t>
-<t>
- <list style="symbols">
- <t>
-Changed the YANG version from &quot;1&quot; to &quot;1.1&quot;.
- </t>
- <t>
-Made the &quot;yang&#8209;version&quot; statement mandatory in YANG version &quot;1.1&quot;.
- </t>
- <t>
-Extended the &quot;if&#8209;feature&quot; syntax to be a boolean expression over
-feature names.
- </t>
- <t>
-Allow &quot;if&#8209;feature&quot; in &quot;bit&quot;, &quot;enum&quot;, and &quot;identity&quot;.
- </t>
- <t>
-Allow &quot;if&#8209;feature&quot; in &quot;refine&quot;.
- </t>
- <t>
-Allow &quot;choice&quot; as a shorthand &quot;case&quot; statement (see <xref target="case"/>).
- </t>
- <t>
-Added a new substatement &quot;modifier&quot; to the &quot;pattern&quot;
-statement (see <xref target="modifier"/>).
- </t>
- <t>
-Allow &quot;must&quot; in &quot;input&quot;, &quot;output&quot;, and &quot;notification&quot;.
- </t>
- <t>
-Allow &quot;require&#8209;instance&quot; in leafref.
- </t>
- <t>
-Allow &quot;description&quot; and &quot;reference&quot; in &quot;import&quot; and &quot;include&quot;.
- </t>
- <t>
-Allow imports of multiple revisions of a module.
- </t>
- <t>
-Allow &quot;augment&quot; to add conditionally mandatory nodes (see <xref target="augment"/>).
- </t>
- <t>
-Added a set of new XML Path Language (XPath) functions
-in <xref target="xpath-functions"/>.
- </t>
- <t>
-Clarified the XPath context&apos;s tree in <xref target="xpath-context"/>.
- </t>
- <t>
-Defined the string value of an identityref in XPath expressions
-(see <xref target="identityref"/>).
- </t>
- <t>
-Clarified what unprefixed names mean in leafrefs in typedefs (see
-Sections&nbsp;<xref target="xpath-context" format="counter"/> and
-<xref target="path" format="counter"/>).
- </t>
- <t>
-Allow identities to be derived from multiple base identities (see
-Sections&nbsp;<xref target="identity" format="counter"/> and
-<xref target="identityref" format="counter"/>).
- </t>
- <t>
-Allow enumerations and bits to be subtyped (see
-Sections&nbsp;<xref target="enumeration" format="counter"/>
-and&nbsp;<xref target="bits" format="counter"/>).
- </t>
- <t>
-Allow leaf-lists to have default values (see
-<xref target="leaf-list-default-value"/>).
- </t>
- <t>
-Allow non-unique values in non-configuration leaf-lists (see
-<xref target="leaf-list"/>).
+    <t>YANG <xref target="RFC6020"/> <xref target="RFC7950"/> is a data modeling
+    language used to model configuration, operational state, asynchronous
+    notifications, and remote procedure calls (RPCs) for network management.
+    In this sense, YANG is a domain-specific data modeling language having,
+    e.g., first-class annotations for configuration and operational state,
+    with rules for how they relate.</t>
 
- </t>
- <t>
-Use syntax for case-sensitive strings (as per <xref target="RFC7405"/>) in the grammar.
- </t>
- <t>
-Changed the module advertisement mechanism (see <xref target="announce"/>).
- </t>
- <t>
-Changed the scoping rules for definitions in submodules.  A
-submodule can now reference all definitions in all submodules that
-belong to the same module, without using the &quot;include&quot; statement.
- </t>
- <t>
-Added a new statement &quot;action&quot;, which is used to define operations
-tied to data nodes.
- </t>
- <t>
-Allow notifications to be tied to data nodes.
- </t>
- <t>
-Added a new data definition statement &quot;anydata&quot; (see <xref target="anydata"/>),
-which is RECOMMENDED to be used instead of &quot;anyxml&quot; when the data
-can be modeled in YANG.
- </t>
- <t>
-Allow types &quot;empty&quot; and &quot;leafref&quot; in unions.
- </t>
- <t>
-Allow type &quot;empty&quot; in a key.
- </t>
+    <t>Historically, YANG has been used to manage network elements such as
+    routers, switches, and firewalls.  Thus said, it is observed that YANG
+    is suitable to any networked application having a programmatic interface
+    for configuration, operational state, asynchronous notifications, and/or
+    remote procedure calls (RPCs).</t>
 
- <t>
-Removed the restriction that identifiers could not start with the
-characters &quot;xml&quot;.
- </t>
- </list>
-</t>
-    <t>
-The following changes have been done to the NETCONF mapping:
-    </t>
-<t>
- <list style="symbols">
- <t>
-A server advertises support for YANG 1.1 modules by using
-ietf&nbhy;yang-library <xref target="RFC8525"/> instead of listing
-them as capabilities in the &lt;hello&gt; message.
- </t>
- </list>
-</t>
+    <t>YANG is high-level data modeling language, independent of any specific
+    encoding or any specific protocol.  Encodings (e.g., XML <xref target="I-D.yn-netmod-yang-xml"/>,
+    JSON <xref target="RFC7951"/>, CBOR <xref target="I-D.ietf-core-yang-cbor"/>, etc.)
+    and protocols (e.g., NETCONF <xref target="RFC6241"/>, RESTCONF
+    <xref target="RFC8040"/>, CORECONF <xref target="I-D.ietf-core-comi"/>,
+    etc.) are out of scope for this specification.</t>
+
+    <t>This document describes the syntax and semantics of version&nbsp;2.0
+    of the YANG language (YANG&nbsp;1.1). YANG&nbsp;2.0 is a major
+    release of the YANG language, addressing issues in the
+    original specification.</t>
+
+    <t>Note that this document does not obsolete RFC 6020 <xref target="RFC6020"/>
+    or RFC 7950 <xref target="RFC7950"/>.  A mix of YANG module versions may be
+    used to describe a complete data model, as described in Section <xref target="coexistence"/>.</t>
+
+    <t>In terms of developing YANG data models, <xref target="RFC8407"/>
+        provides some guidelines and recommendations.</t>
+
+<section title="Summary of Changes from RFC 7950">
+    <t>This document defines version 2.0 of the YANG language.  YANG&nbsp;2.0
+    is a major release of the YANG language. Whilst it is by and large the
+    same as RFC&nbsp;7950, the following changes exist:</t>
+    <ol>
+      <li>None yat</li>
+    </ol>
 </section>
+
 </section>
 <section title="Key Words">
     <t>
@@ -11690,19 +11541,6 @@ compromised.
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml"/>
 
-<reference anchor="XML" target="https://www.w3.org/TR/2008/REC-xml-20081126/">
-    <front>
-     <title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
-      <author fullname="Tim Bray" surname="Bray" initials="T."/>
-      <author fullname="Jean Paoli" surname="Paoli" initials="J."/>
-      <author fullname="Michael Sperberg-McQueen" surname="Sperberg-McQueen"
-           initials="C."/>
-      <author fullname="Eve Maler" surname="Maler" initials="E."/>
-      <author fullname="Francois Yergeau" surname="Yergeau" initials="F."/>
-      <date year="2008" month="November" day="26"/>
-    </front><seriesInfo name="W3C Recommendation" value="REC-xml-20081126"/>
-</reference>
-
 <reference anchor="XML-NAMES" target="http://www.w3.org/TR/2009/REC-xml-names-20091208">
   <front>
     <title>Namespaces in XML 1.0 (Third Edition)</title>
@@ -11792,10 +11630,13 @@ compromised.
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6643.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7951.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8407.xml"/>
     <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-core-comi.xml"/>
+    <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-core-yang-cbor.xml"/>
+    <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.yn-netmod-yang-xml"/>
 
 <reference anchor="XSLT" target="http://www.w3.org/TR/1999/REC-xslt-19991116">
   <front>
