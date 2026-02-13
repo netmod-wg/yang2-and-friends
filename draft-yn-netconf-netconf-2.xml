@@ -422,7 +422,7 @@ distinguish the naming authority to avoid naming collisions.
       </section>
       <section title="Relation to YANG">
 
-        <section title="From Section 5.1.2.1">
+        <section title="From Section 5.1.2.1 (NETCONF XML Encoding)">
     <t>
 NETCONF is capable of carrying any XML content as the payload in the
 &lt;config&gt; and &lt;data&gt; elements.  The top-level nodes of YANG modules are
@@ -469,6 +469,11 @@ could be encoded in NETCONF as:
   </rpc>
             ]]></artwork>
         </figure>
+        </section>
+        <section title="From 5.3.1 (YANG XML Namespace)" anchor="yang-namespace">
+         <t>YANG defines an XML namespace for NETCONF &lt;edit&#8209;config&gt; operations,
+         &lt;error&#8209;info&gt; content, and the &lt;action&gt; element.  The name of this
+         namespace is &quot;urn:ietf:params:xml:ns:yang:1&quot;.</t>
         </section>
       </section>
     </section>

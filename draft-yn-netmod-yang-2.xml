@@ -1511,34 +1511,15 @@ YANG parsers can find imported modules and included submodules via
 this convention.
     </t>
 </section>
-<section title="XML Namespaces" anchor="intro-namespaces">
+<section title="Namespaces" anchor="intro-namespaces">
     <t>
 All YANG definitions are specified within a module.  Each module is
-bound to a distinct XML namespace <xref target="XML-NAMES"/>, which is a globally
-unique URI <xref target="RFC3986"/>.  A NETCONF client or server uses the namespace
-during XML encoding of data.
-    </t>
-    <t>
-XML namespaces for modules published in RFC streams <xref target="RFC4844"/>
-MUST be assigned by IANA; see Section&nbsp;14 in <xref target="RFC6020"/>.
-    </t>
-    <t>
-XML namespaces for private modules are assigned by the organization
-owning the module without a central registry.  Namespace URIs MUST be
-chosen so they cannot collide with standard or other enterprise
-namespaces -- for example, by using the enterprise or organization name
-in the namespace.
+bound to a distinct namespace.  Network management protocols, such
+as NETCONF or RESTCONF, uses the namespace during encoding of data.
     </t>
     <t>
 The &quot;namespace&quot; statement is covered in <xref target="namespace"/>.
     </t>
-<section title="YANG XML Namespace" anchor="yang-namespace">
-    <t>
-YANG defines an XML namespace for NETCONF &lt;edit&#8209;config&gt; operations,
-&lt;error&#8209;info&gt; content, and the &lt;action&gt; element.  The name of this
-namespace is &quot;urn:ietf:params:xml:ns:yang:1&quot;.
-    </t>
-</section>
 </section>
 <section title="Resolving Grouping, Type, and Identity Names">
     <t>
@@ -2712,14 +2693,24 @@ For compatibility between YANG versions 1 and 1.1, see <xref target="coexistence
     </t>
 </section>
 <section title="The &quot;namespace&quot; Statement" anchor="namespace">
-    <t>
-The &quot;namespace&quot; statement defines the XML namespace that all
-identifiers defined by the module are qualified by in the XML
-encoding, with the exception of identifiers for data nodes, action
-nodes, and notification nodes defined inside a grouping (see <xref target="uses"/>
-for details).  The argument to the &quot;namespace&quot; statement is the URI of
-the namespace.
-    </t>
+
+      <t>The &quot;namespace&quot; statement defines the XML namespace
+      <xref target="XML-NAMES"/>, which is a globally unique URI
+      <xref target="RFC3986"/>, that all identifiers defined by the module
+      are qualified by in the XML encoding <xref target="I-D.yn-netmod-yang-xml"/>,
+      with the exception of identifiers for data nodes, action nodes,
+      and notification nodes defined inside a grouping (see <xref target="uses"/>
+      for details).  The argument to the &quot;namespace&quot; statement
+      is the URI of the namespace.  See <xref section="4" target="I-D.yn-netmod-yang-xml"/>
+      for details.</t>
+
+      <t>For modules published in RFC streams <xref target="RFC4844"/>, the
+      namespace MUST be assigned by IANA; see Section&nbsp;14 in <xref target="RFC6020"/>.
+      XML namespaces for private modules are assigned by the organization
+      owning the module without a central registry.  Namespace URIs MUST be
+      chosen so they cannot collide with standard or other enterprise
+      namespaces -- for example, by using the enterprise or organization name
+      in the namespace.</t>
     <t>
 See also <xref target="intro-namespaces"/>.
     </t>
@@ -4251,7 +4242,7 @@ leaf-list entry&apos;s XML element.
     </t>
     <t>
 In an &quot;ordered-by user&quot; leaf-list, the attributes &quot;insert&quot; and &quot;value&quot;
-in the YANG XML namespace (<xref target="yang-namespace"/>) can be used to control where
+in the YANG XML namespace <!-- FIXME: (<xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) --> can be used to control where
 in the leaf-list the entry is inserted.  These can be used during
 &quot;create&quot; operations to insert a new leaf-list entry, or during &quot;merge&quot;
 or &quot;replace&quot; operations to insert a new leaf-list entry or move an
@@ -4649,7 +4640,7 @@ list entry, a &quot;missing&#8209;element&quot; error is returned.
     </t>
     <t>
 In an &quot;ordered-by user&quot; list, the attributes &quot;insert&quot; and &quot;key&quot; in the
-YANG XML namespace (<xref target="yang-namespace"/>) can be used to control where in the
+YANG XML namespace <!-- FIXME: (<xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) --> can be used to control where in the
 list the entry is inserted.  These can be used during &quot;create&quot;
 operations to insert a new list entry, or during &quot;merge&quot; or &quot;replace&quot;
 operations to insert a new list entry or move an existing one.
@@ -6165,7 +6156,7 @@ the action and the input parameters.
 <section title="NETCONF XML Encoding Rules">
     <t>
 When an action is invoked, an element with the local name &quot;action&quot; in
-the namespace &quot;urn:ietf:params:xml:ns:yang:1&quot; (see <xref target="yang-namespace"/>)
+the namespace &quot;urn:ietf:params:xml:ns:yang:1&quot; <!-- FIXME: (see <xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) -->
 is encoded as a child XML element to the &lt;rpc&gt; element defined in
 <xref target="RFC6241"/>, as designated by the substitution group &quot;rpcOperation&quot; in
 <xref target="RFC6241"/>.
