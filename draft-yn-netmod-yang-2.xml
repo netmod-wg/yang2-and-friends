@@ -93,7 +93,8 @@
     is a major release of the YANG language. Whilst it is by and large the
     same as RFC&nbsp;7950, the following changes exist:</t>
     <ol>
-      <li>None yat</li>
+      <li>Each "XML Encoding Example" and "NETCONF XML Example" in <xref target="lang-over"/>
+          (Language Overview) now has a matching "JSON Encoding Example" or "RESTCONF JSON Example".</li>
     </ol>
 </section>
 
@@ -340,11 +341,9 @@ overview of YANG to first-time readers.
     <t>
 YANG is a language originally designed to model data for the NETCONF
 protocol.  A YANG module defines hierarchies of data that can be used
-for NETCONF-based operations, including configuration, state data,
+for protocol operations including configuration, state data,
 RPCs, and notifications.  This allows a complete description of all
-data sent between a NETCONF client and server.  Although out of scope
-for this specification, YANG can also be used with protocols other
-than NETCONF.
+data sent between a protocol client and server.
     </t>
     <t>
 YANG models the hierarchical organization of data as a tree in which
@@ -406,7 +405,7 @@ out sufficiently for the reader to notice them.
     <t>
 YANG resists the tendency to solve all possible problems, limiting the
 problem space to allow expression of data models for network
-management protocols such as NETCONF, not arbitrary XML documents or
+management protocols such as NETCONF or RESTCONF, not arbitrary documents or
 arbitrary data models.
     </t>
     <t>
@@ -418,7 +417,7 @@ for read-only access <xref target="RFC6643"/>.  However, YANG is not
 concerned with reverse translation from YANG to SMIv2.
     </t>
 </section>
-<section title="Language Overview">
+<section title="Language Overview" anchor="lang-over">
     <t>
 This section introduces some important constructs used in YANG that
 will aid in the understanding of the language specifics in later
@@ -462,7 +461,7 @@ submodule that belongs to it.
     <t>
 YANG defines four main types of data nodes for data modeling.  In each
 of the following subsections, the examples show the YANG syntax as
-well as a corresponding XML encoding.  The syntax of YANG statements
+well as corresponding XML and JSON encodings.  The syntax of YANG statements
 is defined in <xref target="statements"/>.
     </t>
 <section title="Leaf Nodes">
@@ -483,12 +482,20 @@ YANG Example:
             ]]></artwork>
         </figure>
     <t>
-XML Encoding Example:
+XML Encoding Example: (see <xref section="5.1" target="I-D.yn-netmod-yang-xml"/> for details)
     </t>
         <figure>
             <artwork><![CDATA[
   <host-name>my.example.com</host-name>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example: (see <xref section="5.1" target="RFC7951"/> for details)</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "host-name": "my.example.com"
+]]>
+            </artwork>
         </figure>
     <t>
 The &quot;leaf&quot; statement is covered in <xref target="leaf"/>.
@@ -511,7 +518,7 @@ YANG Example:
             ]]></artwork>
         </figure>
     <t>
-XML Encoding Example:
+XML Encoding Example: (see <xref section="5.3" target="I-D.yn-netmod-yang-xml"/> for details)
     </t>
         <figure>
             <artwork><![CDATA[
@@ -519,6 +526,18 @@ XML Encoding Example:
   <domain-search>low.example.com</domain-search>
   <domain-search>everywhere.example.com</domain-search>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example: (see <xref section="5.3" target="RFC7951"/> for details)</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "domain-search": [
+    "high.example.com",
+    "low.example.com",
+    "everywhere.example.com"
+  ]
+]]>
+            </artwork>
         </figure>
     <t>
 The &quot;leaf&#8209;list&quot; statement is covered in <xref target="leaf-list"/>.
@@ -548,7 +567,7 @@ YANG Example:
             ]]></artwork>
         </figure>
     <t>
-XML Encoding Example:
+XML Encoding Example: (see <xref section="5.2" target="I-D.yn-netmod-yang-xml"/> for details)
     </t>
         <figure>
             <artwork><![CDATA[
@@ -558,6 +577,18 @@ XML Encoding Example:
     </login>
   </system>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example: (see <xref section="5.2" target="RFC7951"/> for details)</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "system": {
+    "login": {
+      "message": "Good morning"
+    }
+  }
+]]>
+            </artwork>
         </figure>
     <t>
 The &quot;container&quot; statement is covered in <xref target="container"/>.
@@ -591,7 +622,7 @@ YANG Example:
             ]]></artwork>
         </figure>
     <t>
-XML Encoding Example:
+XML Encoding Example: (see <xref section="5.4" target="I-D.yn-netmod-yang-xml"/> for details)
     </t>
         <figure>
             <artwork><![CDATA[
@@ -611,6 +642,30 @@ XML Encoding Example:
     <class>tower</class>
   </user>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example: (see <xref section="5.4" target="RFC7951"/> for details)</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "user": [
+    {
+      "name": "glocks",
+      "full-name": "Goldie Locks",
+      "class": "intruder"
+    },
+    {
+      "name": "snowey",
+      "full-name": "Snow White",
+      "class": "free-loade"
+    },
+    {
+      "name": "rzell",
+      "full-name": "Rapun Zell",
+      "class": "tower"
+    }
+  ]
+]]>
+            </artwork>
         </figure>
     <t>
 The &quot;list&quot; statement is covered in <xref target="list"/>.
@@ -804,6 +859,14 @@ XML Encoding Example:
   <completed>20</completed>
             ]]></artwork>
         </figure>
+        <t>JSON Encoding Example:</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "completed": 20
+]]>
+            </artwork>
+        </figure>
     <t>
 The &quot;typedef&quot; statement is covered in <xref target="typedef"/>.
     </t>
@@ -849,6 +912,19 @@ XML Encoding Example:
     </destination>
   </peer>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example:</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "peer": {
+    "destination": {
+      "address": "2001:db8::2",
+      "port": 830
+    }
+  }
+]]>
+            </artwork>
         </figure>
     <t>
 The grouping can be refined as it is used, allowing certain statements
@@ -945,6 +1021,17 @@ XML Encoding Example:
   </food>
             ]]></artwork>
         </figure>
+        <t>JSON Encoding Example:</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "food": {
+    "pretzel": [null],
+    "beer": [null]
+  }
+]]>
+            </artwork>
+        </figure>
     <t>
 The &quot;choice&quot; statement is covered in <xref target="choice"/>.
     </t>
@@ -986,10 +1073,10 @@ This example defines a &quot;uid&quot; node that is valid only when the
 user&apos;s &quot;class&quot; is not &quot;wheel&quot;.
     </t>
     <t>
-If a module augments another module, the XML elements that are added
+If a module augments another module, the nodes that are added
 to the encoding are in the namespace of the augmenting module.  For
 example, if the above augmentation were in a module with prefix
-&quot;other&quot;, the XML would look like:
+&quot;other&quot;, the encoding would look like:
     </t>
     <t>
 XML Encoding Example:
@@ -1003,6 +1090,19 @@ XML Encoding Example:
     <other:uid>1024</other:uid>
   </user>
             ]]></artwork>
+        </figure>
+        <t>JSON Encoding Example:</t>
+        <figure>
+            <artwork>
+<![CDATA[
+  "user": {
+    "name": "alicew",
+    "full-name": "Alice N. Wonderland",
+    "class": "drop-out",
+    "my-example:uid": 1024
+  }
+]]>
+            </artwork>
         </figure>
     <t>
 The &quot;augment&quot; statement is covered in <xref target="augment"/>.
@@ -1056,6 +1156,35 @@ NETCONF XML Example:
   </rpc-reply>
             ]]></artwork>
         </figure>
+<t>RESTCONF JSON Example: (see <xref section="3.6" target="RFC8040"/> for details)</t>
+        <figure>
+           <artwork><![CDATA[
+REQUEST
+=======
+POST {+restconf}/operations/activate-software-image HTTP/1.1
+Host: example.com
+Content-Type: application/yang-data+json
+
+{
+    "example-system:input" : {
+        "image-name" : "example-fw-2.3"
+    }
+}
+
+RESPONSE
+========
+HTTP/1.1 200 OK
+Date: Thu, 26 Jan 2017 20:56:30 GMT
+Server: example-server
+Content-Type: application/yang-data+json
+
+{
+    "example-system:output" : {
+        "status" : "The image example-fw-2.3 is being installed."
+    }
+}
+            ]]></artwork>
+        </figure>
     <t>
 YANG Example for an operation tied to a list data node:
     </t>
@@ -1107,6 +1236,35 @@ NETCONF XML Example:
   </rpc-reply>
             ]]></artwork>
         </figure>
+<t>RESTCONF JSON Example: (see <xref section="3.6" target="RFC8040"/> for details)</t>
+        <figure>
+           <artwork><![CDATA[
+REQUEST
+=======
+POST {+restconf}/data/example-system:interface=eth1/ping HTTP/1.1
+Host: example.com
+Content-Type: application/yang-data+json
+
+{
+    "example-system:input" : {
+        "destination" : "192.0.2.1"
+    }
+}
+
+RESPONSE
+========
+HTTP/1.1 200 OK
+Date: Thu, 26 Jan 2017 20:56:30 GMT
+Server: example-server
+Content-Type: application/yang-data+json
+
+{
+    "example-system:output" : {
+        "packet-loss" : 60
+    }
+}
+            ]]></artwork>
+        </figure>
     <t>
 The &quot;rpc&quot; statement is covered in <xref target="rpc"/>, and
 the &quot;action&quot; statement is covered in <xref target="action"/>.
@@ -1153,6 +1311,21 @@ NETCONF XML Example:
       <if-oper-status>down</if-oper-status>
     </link-failure>
   </notification>
+            ]]></artwork>
+        </figure>
+<t>RESTCONF JSON SSE Example: (see <xref section="6.4" target="RFC8040"/> for details)</t>
+        <figure>
+           <artwork><![CDATA[
+data: {
+data:   "ietf-restconf:notification" : {
+data:     "eventTime" : "2007-09-01T10:00:00Z",
+data:     "example-system:link-failure" : {
+data:       "if-name" : "so-1/2/3.0",
+data:       "if-admin-status" : "up",
+data:       "if-oper-status" : "down"
+data:     }
+data:   }
+data: }
             ]]></artwork>
         </figure>
     <t>
