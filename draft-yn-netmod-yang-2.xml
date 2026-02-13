@@ -1,17 +1,22 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+<?xml version='1.0' encoding='utf-8'?>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
-<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+
+<!DOCTYPE rfc
+[
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
 
 <?rfc toc="yes"?>
 <?rfc compact="no"?>
 <?rfc subcompact="no"?>
-<?rfc symrefs="yes" ?>
-<?rfc sortrefs="yes"?>
 <?rfc iprnotified="no"?>
 <?rfc strict="yes"?>
 
-<rfc ipr="pre5378Trust200902" category="std" number="7950"
-     submissionType="IETF" consensus="yes">
+<rfc ipr="pre5378Trust200902" category="std" submissionType="IETF" consensus="true"
+    xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-2-latest">
 
     <front>
     <title abbrev="YANG 1.1">The YANG 1.1 Data Modeling Language</title>
@@ -23,7 +28,7 @@
       </address>
     </author>
 
-    <date month="August" year="2016"/>
+    <date/>
 
         <keyword>NETCONF</keyword>
         <keyword>XML</keyword>
@@ -51,9 +56,9 @@ configuration and state data manipulated by the Network Configuration
 Protocol (NETCONF), NETCONF Remote Procedure Calls, and NETCONF
 notifications <xref target="RFC6241"/>.  Since the publication of YANG
 version 1 <xref target="RFC6020"/>, YANG has been used or proposed to be
-used for other protocols (e.g., RESTCONF <xref target="RESTCONF"/> and
+used for other protocols (e.g., RESTCONF <xref target="RFC8040"/> and
 the Constrained Application Protocol (CoAP) Management Interface (CoMI)
-<xref target="CoMI"/>).  Further, encodings other than XML have been
+<xref target="I-D.ietf-core-comi"/>).  Further, encodings other than XML have been
 proposed (e.g., JSON <xref target="RFC7951"/>).
     </t>
     <t>
@@ -65,7 +70,7 @@ the data.  Other protocols and encodings are possible but are out of scope
 for this specification.
     </t>
     <t>
-In terms of developing YANG data models, <xref target="YANG-Guidelines"/>
+In terms of developing YANG data models, <xref target="RFC8407"/>
 provides some guidelines and recommendations.
     </t>
     <t>
@@ -235,7 +240,7 @@ The following changes have been done to the NETCONF mapping:
  <list style="symbols">
  <t>
 A server advertises support for YANG 1.1 modules by using
-ietf&nbhy;yang-library <xref target="RFC7895"/> instead of listing
+ietf&nbhy;yang-library <xref target="RFC8525"/> instead of listing
 them as capabilities in the &lt;hello&gt; message.
  </t>
  </list>
@@ -244,10 +249,7 @@ them as capabilities in the &lt;hello&gt; message.
 </section>
 <section title="Key Words">
     <t>
-The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
-&quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and
-&quot;OPTIONAL&quot; in this document are to be interpreted as described in
-BCP&nbsp;14 <xref target="RFC2119"/>.
+The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.
     </t>
 </section>
 <section title="Terminology" anchor="terminology">
@@ -1729,7 +1731,7 @@ specifications.
 A NETCONF server MUST announce the modules it implements (see
 <xref target="implementing"/>) by implementing the YANG module
 &quot;ietf&#8209;yang&#8209;library&quot; defined in
-<xref target="RFC7895"/> and listing all implemented modules in
+<xref target="RFC8525"/> and listing all implemented modules in
 the &quot;/modules&#8209;state/module&quot; list.
     </t>
     <t>
@@ -1780,7 +1782,7 @@ If a server implements a module A that imports a module C without
 specifying the revision date of module C and the server does not
 implement C (e.g., if C only defines some typedefs), the server MUST
 list module C in the &quot;/modules&#8209;state/module&quot; list from
-&quot;ietf&#8209;yang&#8209;library&quot; <xref target="RFC7895"/>, and it MUST set
+&quot;ietf&#8209;yang&#8209;library&quot; <xref target="RFC8525"/>, and it MUST set
 the leaf &quot;conformance&#8209;type&quot; to &quot;import&quot; for this module.
     </t>
     <t>
@@ -11677,17 +11679,16 @@ compromised.
 
 <references title="Normative References">
 
-<?rfc include="reference.RFC.2119"?>
-<?rfc include="reference.RFC.3629"?>
-<?rfc include="reference.RFC.3986"?>
-<?rfc include="reference.RFC.4648"?>
-<?rfc include="reference.RFC.5234"?>
-<?rfc include="reference.RFC.5277"?>
-<?rfc include="reference.RFC.6241"?>
-<?rfc include="reference.RFC.7405"?>
-
-<!-- draft-ietf-netconf-yang-library (PUB) -->
-<?rfc include="reference.RFC.7895"?>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3629.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5234.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5277.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7405.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml"/>
 
 <reference anchor="XML" target="https://www.w3.org/TR/2008/REC-xml-20081126/">
     <front>
@@ -11784,71 +11785,17 @@ compromised.
   <seriesInfo name="DOI" value="10.1109/IEEESTD.2008.4610935" />
 </reference>
 
-<?rfc include="reference.RFC.2578"?>
-<?rfc include="reference.RFC.2579"?>
-<?rfc include="reference.RFC.3780"?>
-<?rfc include="reference.RFC.4844"?>
-<?rfc include="reference.RFC.6020"?>
-<?rfc include="reference.RFC.6643"?>
-<?rfc include="reference.RFC.6991"?>
-
-<!-- draft-ietf-netmod-yang-json (RFC 7951) -->
-<reference anchor="RFC7951" target="http://www.rfc-editor.org/info/rfc7951">
-  <front>
-    <title>JSON Encoding of Data Modeled with YANG</title>
-    <author initials="L" surname="Lhotka" fullname="Ladislav Lhotka">
-      <organization/>
-    </author>
-    <date month="August" year="2016"/>
-  </front>
-<seriesInfo name='RFC' value='7951'/>
-<seriesInfo name="DOI" value="10.17487/RFC7951"/>
-</reference>
-
-<!-- draft-ietf-netmod-rfc6087bis (I-D Exists) -->
-<reference anchor="YANG-Guidelines">
-  <front>
-    <title>Guidelines for Authors and Reviewers of YANG Data Model Documents</title>
-    <author initials="A" surname="Bierman" fullname="Andy Bierman">
-      <organization/>
-    </author>
-    <date month="July" year="2016"/>
-  </front>
- <seriesInfo name="Work in Progress," value="draft-ietf-netmod-rfc6087bis-07"/>
-</reference>
-
-<!-- draft-ietf-netconf-restconf (Waiting for Writeup) -->
-<reference anchor="RESTCONF">
-  <front>
-    <title>RESTCONF Protocol</title>
-    <author initials="A" surname="Bierman" fullname="Andy Bierman">
-      <organization/>
-    </author>
-    <author initials="M" surname="Bjorklund" fullname="Martin Bjorklund">
-      <organization/>
-    </author>
-    <author initials="K" surname="Watsen" fullname="Kent Watsen">
-      <organization/>
-    </author>
-    <date month="August" year="2016"/>
-  </front>
-  <seriesInfo name="Work in Progress," value="draft-ietf-netconf-restconf-16"/>
-</reference>
-
-<!-- draft-vanderstok-core-comi (-D Exists) -->
-<reference anchor="CoMI">
-  <front>
-    <title>CoAP Management Interface</title>
-    <author initials="P" surname="van der Stok" fullname="Peter van der Stok">
-      <organization/>
-    </author>
-    <author initials="A" surname="Bierman" fullname="Andy Bierman">
-      <organization/>
-    </author>
-    <date month="March" year="2016"/>
-  </front>
-  <seriesInfo name="Work in Progress," value="draft-vanderstok-core-comi-09"/>
-</reference>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2578.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2579.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3780.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4844.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6643.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7951.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8407.xml"/>
+    <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-core-comi.xml"/>
 
 <reference anchor="XSLT" target="http://www.w3.org/TR/1999/REC-xslt-19991116">
   <front>

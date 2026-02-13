@@ -11,7 +11,8 @@
 <?rfc sortrefs="yes"?>
 <?rfc rfcedstyle="yes"?>
 <?rfc compact="yes"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" number="6241" ipr="pre5378Trust200902" category="std" obsoletes="4741" submissionType="IETF" updates="" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="pre5378Trust200902" category="std" submissionType="IETF" updates="" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3" consensus="true" docName="draft-yn-netconf-netconf-2-latest">
+
   <!-- xml2rfc v2v3 conversion 3.21.0 -->
   <front>
     <title abbrev="NETCONF Protocol">Network Configuration Protocol (NETCONF)</title>
