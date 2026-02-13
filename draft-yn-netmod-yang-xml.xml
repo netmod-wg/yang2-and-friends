@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE rfc
+[
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
+
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
+<?rfc toc="yes"?>
+<?rfc compact="no"?>
+<?rfc subcompact="no"?>
+<?rfc iprnotified="no"?>
+<?rfc strict="yes"?>
+
+<rfc ipr="pre5378Trust200902" category="std" submissionType="IETF" consensus="true"
+    xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-xml-latest">
+    <front>
+        <title abbrev="XML Encoding of YANG Data">XML Encoding of Data Modeled with YANG</title>
+        <author initials="K" surname="Watsen" fullname='Kent Watsen' role="editor">
+            <organization>Watsen Networks</organization>
+            <address>
+                <email>kent+ietf@watsen.net</email>
+            </address>
+        </author>
+        <date/>
+        <area>Operations</area>
+        <workgroup>NETMOD Working Group</workgroup>
+        <keyword>yang</keyword>
+        <keyword>xml</keyword>
+        <abstract>
+            <t>This document defines encoding rules for representing YANG modeled
+            configuration data, state data, parameters of Remote Procedure Call (RPC)
+            operations or actions, and notifications defined using XML.</t>
+        </abstract>
+        <note title="GitHub Information (to be removed by RFC Editor)">
+            <t>This document is developed on GitHub (<eref target="https://github.com/netmod-wg/yang2-and-friends"/>).
+            If you wish to contribute, please consider opening a pull request (PR).  Please see the
+            README file for details.</t>
+        </note>
+    </front>
+    <middle>
+        <section title="Introduction">
+            <t>This document defines encoding rules for representing YANG
+            <xref target="RFC7950"/> modeled configuration
+            data, state data, parameters of Remote Procedure Call (RPC)
+            operations or actions, and notifications defined using
+            the Extensible Markup Language (XML) <xref target="XML"/>.</t>
+        </section>
+
+        <section title="Terminology and Notation">
+            <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+            "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
+            and "OPTIONAL" in this document are to be interpreted as described
+            in BCP&nbsp;14 <xref target="RFC2119"/> <xref target="RFC8174"/>
+            when, and only when, they appear in all capitals, as shown here.</t>
+          <t>The following terms are defined in <xref target="RFC7950"/>:</t>
+            <ul spacing="compact">
+                <li>action</li>
+                <li>anydata</li>
+                <li>anyxml</li>
+                <li>augment</li>
+                <li>container</li>
+                <li>data node</li>
+                <li>data tree</li>
+                <li>identity</li>
+                <li>instance identifier</li>
+                <li>leaf</li>
+                <li>leaf-list</li>
+                <li>list</li>
+                <li>module</li>
+                <li>RPC operation</li>
+                <li>submodule</li>
+            </ul>
+            <t>The following terms are defined in <xref target="RFC6241"/></t>
+            <ul spacing="compact">
+              <li>configuration data</li>
+              <li>notification</li>
+              <li>state data</li>
+            </ul>
+        </section>
+
+        <section title="Properties of the XML Encoding">
+
+            <t>This document defines XML encoding for YANG data trees and their
+            subtrees.  It is always assumed that there may be one or more top-level
+            elements in XML-encoded configuration data and state data. RPC operations
+            and notifications contain a single top-level element.</t>
+
+            <t>Instances of YANG data nodes (leafs, containers, leaf-lists, lists,
+            anydata nodes, and anyxml nodes) are encoded as XML elements having
+            the name of the YANG data node.  <xref target="names"/>) defines
+            how the name is qualified with a namespace, and the following sections
+            deal with the value part.  The encoding rules are identical for all
+            types of data trees, i.e., configuration data, state data, parameters
+            of RPC operations, actions, and notifications.</t>
+
+            <t>With the exception of "anydata" encoding (<xref target="anydata"/>), all rules in
+            this document are also applicable to YANG&nbsp;1.0 <xref target="RFC6020"/>.</t>
+
+            <t>With the exception of anyxml and schema-less anydata nodes, it is
+            possible to map an XML-encoded data tree to other encodings, such as
+            the JSON encoding as defined in <xref target="RFC7951"/>, and vice
+            versa.  However, such conversions require the YANG data model to be
+            available.</t>
+        </section>
+
+        <section title="Names and Namespaces" anchor="names">
+        </section>
+
+        <section title="Encoding of YANG Data Node Instances">
+
+            <section title='The "leaf" Data Node' anchor="leaf">
+            </section>
+
+            <section title='The "container" Data Node'>
+            </section>
+
+            <section title='The "leaf-list" Data Node'>
+            </section>
+
+            <section title='The "list" Data Node'>
+            </section>
+
+            <section title='The "anydata" Data Node' anchor="anydata">
+            </section>
+
+            <section title='The "anyxml" Data Node'>
+                <t>An anyxml node is encoded the same as an anydata node.  Please see
+                <xref target="anydata"/> for how the anydata node is encoded.</t>
+            </section>
+
+            <section title="Metadata Objects">
+                <t>Apart from instances of YANG data nodes, XML elements MAY contain
+                XML attributes for special purposes, such as encoding metadata
+                <xref target="RFC7952"/>. The exact syntax and semantics of such
+                members are outside the scope of this document.</t>
+            </section>
+
+        </section>
+
+        <section title="Representing YANG Data Types in XML Values" anchor="types">
+
+            <t>The type of the XML value in an instance of the leaf or leaf-list
+            data node depends on the type of that data node, as specified in the
+            following subsections.</t>
+
+            <section title="Numeric Types">
+            </section>
+
+            <section title='The "string" Type'>
+            </section>
+
+            <section title='The "boolean" Type'>
+            </section>
+
+            <section title='The "enumeration" Type'>
+            </section>
+
+            <section title='The "bits" Type'>
+            </section>
+
+            <section title='The "binary" Type'>
+            </section>
+
+            <section title='The "leafref" Type'>
+            </section>
+
+            <section title='The "identityref" Type' anchor="identityref">
+            </section>
+
+            <section title='The "empty" Type'>
+            </section>
+
+            <section title='The "union" Type'>
+            </section>
+
+            <section title='The "instance-identifier" Type' anchor="instance-identifier">
+            </section>
+
+        </section>
+
+        <section title="IANA Considerations" anchor="iana">
+        </section>
+        <section title="Security Considerations">
+        </section>
+
+    </middle>
+    <back>
+        <references title="Normative References">
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+            <reference anchor="XML" target="https://www.w3.org/TR/2008/REC-xml-20081126/">
+                <front>
+                    <title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
+                    <author fullname="Tim Bray" surname="Bray" initials="T."/>
+                    <author fullname="Jean Paoli" surname="Paoli" initials="J."/>
+                    <author fullname="Michael Sperberg-McQueen" surname="Sperberg-McQueen"
+                         initials="C."/>
+                    <author fullname="Eve Maler" surname="Maler" initials="E."/>
+                    <author fullname="Francois Yergeau" surname="Yergeau" initials="F."/>
+                    <date year="2008" month="November" day="26"/>
+                </front><seriesInfo name="W3C Recommendation" value="REC-xml-20081126"/>
+            </reference>
+        </references>
+        <references title="Informative References">
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7951.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7952.xml"/>
+        </references>
+        <section title="Acknowledgements" numbered="no">
+            <t>Substantial amounts of text in this document was copied from <xref target="RFC7950"/>
+            and <xref target="RFC7951"/>.  The authors wish to thank Martin Björklund and
+            Ladislav Lhotka for authoring RFC 7950 and RFC 7951, respectively.</t>
+        </section>
+    </back>
+</rfc>
