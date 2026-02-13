@@ -470,10 +470,49 @@ could be encoded in NETCONF as:
             ]]></artwork>
         </figure>
         </section>
+
         <section title="From 5.3.1 (YANG XML Namespace)" anchor="yang-namespace">
          <t>YANG defines an XML namespace for NETCONF &lt;edit&#8209;config&gt; operations,
          &lt;error&#8209;info&gt; content, and the &lt;action&gt; element.  The name of this
          namespace is &quot;urn:ietf:params:xml:ns:yang:1&quot;.</t>
+        </section>
+
+        <section title="From 5.6.4 (Announcing Conformance Information in NETCONF)">
+    <t>
+A NETCONF server MUST announce the modules it implements (see
+<xref target="implementing"/>) by implementing the YANG module
+&quot;ietf&#8209;yang&#8209;library&quot; defined in
+<xref target="RFC8525"/> and listing all implemented modules in
+the &quot;/modules&#8209;state/module&quot; list.
+    </t>
+    <t>
+The server also MUST advertise the following capability in the &lt;hello&gt;
+message (line breaks and whitespaces are used for formatting reasons
+only):
+    </t>
+
+        <figure>
+            <artwork><![CDATA[
+  urn:ietf:params:netconf:capability:yang-library:1.0?
+    revision=<date>&module-set-id=<id>
+            ]]></artwork>
+        </figure>
+    <t>
+The parameter &quot;revision&quot; has the same value as the revision date of
+the &quot;ietf&#8209;yang&#8209;library&quot; module implemented by the server.  This
+parameter MUST be present.
+    </t>
+    <t>
+The parameter &quot;module&#8209;set&#8209;id&quot; has the same value as the leaf
+&quot;/modules&#8209;state/module&#8209;set&#8209;id&quot; from &quot;ietf&#8209;yang&#8209;library&quot;.  This
+parameter MUST be present.
+    </t>
+    <t>
+With this mechanism, a client can cache the supported modules for a
+server and only update the cache if the &quot;module&#8209;set&#8209;id&quot; value in the
+&lt;hello&gt; message changes.
+    </t>
+</section>
         </section>
       </section>
     </section>
