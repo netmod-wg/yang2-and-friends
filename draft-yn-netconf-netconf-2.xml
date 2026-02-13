@@ -420,6 +420,57 @@ distinguish the naming authority to avoid naming collisions.
           whether it is included in configuration data.
         </t>
       </section>
+      <section title="Relation to YANG">
+
+        <section title="From Section 5.1.2.1">
+    <t>
+NETCONF is capable of carrying any XML content as the payload in the
+&lt;config&gt; and &lt;data&gt; elements.  The top-level nodes of YANG modules are
+encoded as child elements, in any order, within these elements.  This
+encapsulation guarantees that the corresponding NETCONF messages are
+always well-formed XML documents.
+    </t>
+    <t>
+For example, an instance of:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  module example-config {
+    yang-version 1.1;
+    namespace "urn:example:config";
+    prefix "co";
+
+    container system { ... }
+    container routing { ... }
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+could be encoded in NETCONF as:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="101"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config">
+          <!-- system data here -->
+        </system>
+        <routing xmlns="urn:example:config">
+          <!-- routing data here -->
+        </routing>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+        </section>
+      </section>
     </section>
     <section anchor="transportRequirements" numbered="true" toc="default">
       <name>Transport Protocol Requirements</name>
