@@ -3759,8 +3759,7 @@ This constraint is enforced according to the rules in <xref target="constraints"
 </section>
 <section title="Usage Example" anchor="leaf-xml-encoding-example">
     <t>
-Given the following &quot;leaf&quot; statement, placed in the previously defined
-&quot;ssh&quot; container (see <xref target="container-xml-encoding-example"/>):
+Given the following &quot;leaf&quot; statement:
     </t>
         <figure>
             <artwork><![CDATA[
@@ -3781,28 +3780,11 @@ A corresponding XML instance example:
             ]]></artwork>
         </figure>
     <t>
-To set the value of a leaf with an &lt;edit&#8209;config&gt;:
+A corresponding JSON instance example:
     </t>
         <figure>
             <artwork><![CDATA[
-  <rpc message-id="101"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <edit-config>
-      <target>
-        <running/>
-      </target>
-      <config>
-        <system xmlns="urn:example:config">
-          <services>
-            <ssh>
-              <port>2022</port>
-            </ssh>
-          </services>
-        </system>
-      </config>
-    </edit-config>
-  </rpc>
+  "port": 2022
             ]]></artwork>
         </figure>
 </section>
