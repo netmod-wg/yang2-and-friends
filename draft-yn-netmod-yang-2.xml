@@ -3473,14 +3473,16 @@ implementation decision.
     <t>
 The &quot;error&#8209;message&quot; statement, which is optional, takes a string
 as an argument.  If the constraint evaluates to &quot;false&quot;, the string is
-passed as &lt;error&#8209;message&gt; in the &lt;rpc&#8209;error&gt; in NETCONF.
+passed as &lt;error&#8209;message&gt; in the &lt;rpc&#8209;error&gt; returned
+by a validator.
     </t>
 </section>
 <section title="The &quot;error-app-tag&quot; Statement" anchor="error-app-tag">
     <t>
 The &quot;error&#8209;app&#8209;tag&quot; statement, which is optional, takes a string
 as an argument.  If the constraint evaluates to &quot;false&quot;, the string is
-passed as &lt;error&#8209;app&#8209;tag&gt; in the &lt;rpc&#8209;error&gt; in NETCONF.
+passed as &lt;error&#8209;app&#8209;tag&gt; in the &lt;rpc&#8209;error&gt; returned
+by a validator.
     </t>
 </section>
 <section title="Usage Example of must and error-message">
