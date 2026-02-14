@@ -247,10 +247,37 @@ module example-barmod {
         <section title="Encoding of YANG Data Node Instances">
 
             <section title='The "leaf" Data Node' anchor="leaf">
+                <!-- this part from RFC 7950 Section 7.6.6 (XML Encoding Rules) -->
+                <t>A leaf node is encoded as an XML element.  The element's local name
+                is the leaf's identifier, and its namespace is the module's XML
+                namespace (see <xref target="names"/>).</t>
+                <t>The value of the leaf node is encoded to XML according to the
+                type (see <xref target="types"/> for type encoding rules) and is
+                sent as character data in the element.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.1 (The "leaf" Data Node) -->
+                <t>Example: For the leaf node definition</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf foo {
+  type uint8;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>123</foo>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "container" Data Node'>
-              <!-- this part from RFC 7950 Section 7.5.7 (XML Encoding Rules) -->
+                <!-- this part from RFC 7950 Section 7.5.7 (XML Encoding Rules) -->
                 <t>A container node is encoded as an XML element. The element's local name is
                 the container's identifier, and its namespace is the module's XML namespace
                 (see <xref target="names"/>).</t>

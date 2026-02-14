@@ -3757,20 +3757,6 @@ data tree.
 This constraint is enforced according to the rules in <xref target="constraints"/>.
     </t>
 </section>
-<section title="XML Encoding Rules">
-    <t>
-A leaf node is encoded as an XML element.  The element&apos;s local name is
-the leaf&apos;s identifier, and its namespace is the module&apos;s XML
-namespace (see <xref target="namespace"/>).
-    </t>
-    <t>
-The value of the leaf node is encoded to XML according to the type and is
-sent as character data in the element.
-    </t>
-    <t>
-See <xref target="leaf-xml-encoding-example"/> for an example.
-    </t>
-</section>
 <section title="NETCONF &lt;edit-config&gt; Operations" anchor="leaf-edit">
     <t>
 When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
