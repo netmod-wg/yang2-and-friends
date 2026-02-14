@@ -571,6 +571,62 @@ the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
  </li>
 </ul>
         </section>
+        <section title="From Section 7.7.9 (NETCONF &lt;edit-config&gt; Operations, for leaf-lists)">
+    <t>
+Leaf-list entries can be created and deleted, but not modified,
+through &lt;edit&#8209;config&gt;, by using the &quot;operation&quot; attribute in the
+leaf-list entry&apos;s XML element.
+    </t>
+    <t>
+In an &quot;ordered-by user&quot; leaf-list, the attributes &quot;insert&quot; and &quot;value&quot;
+in the YANG XML namespace <!-- FIXME: (<xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) --> can be used to control where
+in the leaf-list the entry is inserted.  These can be used during
+&quot;create&quot; operations to insert a new leaf-list entry, or during &quot;merge&quot;
+or &quot;replace&quot; operations to insert a new leaf-list entry or move an
+existing one.
+    </t>
+    <t>
+The &quot;insert&quot; attribute can take the values &quot;first&quot;, &quot;last&quot;, &quot;before&quot;,
+and &quot;after&quot;.  If the value is &quot;before&quot; or &quot;after&quot;, the &quot;value&quot;
+attribute MUST also be used to specify an existing entry in the
+leaf&nbhy;list.
+    </t>
+    <t>
+If no &quot;insert&quot; attribute is present in the &quot;create&quot; operation, it
+defaults to &quot;last&quot;.
+    </t>
+    <t>
+If several entries in an &quot;ordered-by user&quot; leaf-list are modified
+in the same &lt;edit&#8209;config&gt; request, the entries are modified
+one at a time, in the order of the XML elements in the request.
+    </t>
+    <t>
+In a &lt;copy&#8209;config&gt; or in an &lt;edit&#8209;config&gt; with a &quot;replace&quot; operation
+that covers the entire leaf-list, the leaf-list order is the same as
+the order of the XML elements in the request.
+    </t>
+    <t>
+When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
+elements of procedure for a leaf-list node are as follows:
+    </t>
+ <ul>
+ <li>
+If the operation is &quot;merge&quot; or &quot;replace&quot;, the leaf-list entry is
+created if it does not exist.
+ </li>
+ <li>
+If the operation is &quot;create&quot;, the leaf-list entry is created if it
+does not exist.  If the leaf-list entry already exists, a
+&quot;data&#8209;exists&quot; error is returned.
+ </li>
+ <li>
+If the operation is &quot;delete&quot;, the entry is deleted from the
+leaf&nbhy;list if it exists.  If the leaf-list entry does not exist, a
+&quot;data&#8209;missing&quot; error is returned.
+ </li>
+ </ul>
+
+        </section>
       </section>
     </section>
     <section anchor="transportRequirements" numbered="true" toc="default">

@@ -318,6 +318,40 @@ container bar {
             </section>
 
             <section title='The "leaf-list" Data Node'>
+                <!-- this part from RFC 7950 Section 7.7.8 (XML Encoding Rules) -->
+                <t>A leaf-list node is encoded as a series of XML elements. Each element's
+                local name is the leaf-list's identifier, and its namespace is the module's
+                XML namespace (see <xref target="names"/>).  There is no XML element
+                surrounding the leaf-list as a whole.</t>
+                <t>The value of each leaf-list entry is encoded to XML according to the type
+                and is sent as character data in the element (see <xref target="types"/> for
+                type encoding rules).</t>
+                <t>The XML elements representing leaf-list entries MUST appear in the order
+                specified by the user if the leaf-list is "ordered-by user"; otherwise, the
+                order is implementation dependent. The XML elements representing leaf-list
+                entries MAY be interleaved with elements for siblings of the leaf-list, unless
+                the leaf-list defines RPC or action input or output parameters.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.3 (The "leaf-list" Data Node) -->
+                <t>Example: For the leaf-list definition</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type uint8;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>123</foo>
+<foo>0</foo>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "list" Data Node'>

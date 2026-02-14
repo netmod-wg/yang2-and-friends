@@ -3840,8 +3840,8 @@ traffic from trusted interfaces.  The choice of order would be
 crucial.
     </t>
     <t>
-YANG provides a rich set of facilities within NETCONF&apos;s &lt;edit&#8209;config&gt;
-operation that allows the order of list entries in user-ordered lists
+YANG requires management protocols
+allow the order of list entries in user-ordered lists
 to be controlled.  List entries may be inserted or rearranged,
 positioned as the first or last entry in the list, or positioned
 before or after another specific entry.
@@ -4041,89 +4041,9 @@ This is the default order.
 <section title="ordered-by user">
     <t>
 The entries in the list are ordered according to an order defined by
-the user.  In NETCONF, this order is controlled by using special XML
-attributes in the &lt;edit&#8209;config&gt; request.  See <xref target="leaf-list-edit"/> for details.
+the user.  Management protocols MUST allow this order to be controlled.
     </t>
 </section>
-</section>
-<section title="XML Encoding Rules">
-    <t>
-A leaf-list node is encoded as a series of XML elements.  Each
-element&apos;s local name is the leaf-list&apos;s identifier, and its namespace
-is the module&apos;s XML namespace (see <xref target="namespace"/>).
-    </t>
-    <t>
-The value of each leaf-list entry is encoded to XML according to the
-type and is sent as character data in the element.
-    </t>
-    <t>
-The XML elements representing leaf-list entries MUST appear in the
-order specified by the user if the leaf-list is &quot;ordered-by user&quot;;
-otherwise, the order is implementation dependent.  The XML elements
-representing leaf-list entries MAY be interleaved with elements for
-siblings of the leaf-list, unless the leaf-list defines RPC or action
-input or output parameters.
-    </t>
-    <t>
-See <xref target="leaf-list-xml-encoding-example"/> for an example.
-    </t>
-</section>
-<section title="NETCONF &lt;edit-config&gt; Operations" anchor="leaf-list-edit">
-    <t>
-Leaf-list entries can be created and deleted, but not modified,
-through &lt;edit&#8209;config&gt;, by using the &quot;operation&quot; attribute in the
-leaf-list entry&apos;s XML element.
-    </t>
-    <t>
-In an &quot;ordered-by user&quot; leaf-list, the attributes &quot;insert&quot; and &quot;value&quot;
-in the YANG XML namespace <!-- FIXME: (<xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) --> can be used to control where
-in the leaf-list the entry is inserted.  These can be used during
-&quot;create&quot; operations to insert a new leaf-list entry, or during &quot;merge&quot;
-or &quot;replace&quot; operations to insert a new leaf-list entry or move an
-existing one.
-    </t>
-    <t>
-The &quot;insert&quot; attribute can take the values &quot;first&quot;, &quot;last&quot;, &quot;before&quot;,
-and &quot;after&quot;.  If the value is &quot;before&quot; or &quot;after&quot;, the &quot;value&quot;
-attribute MUST also be used to specify an existing entry in the
-leaf&nbhy;list.
-    </t>
-    <t>
-If no &quot;insert&quot; attribute is present in the &quot;create&quot; operation, it
-defaults to &quot;last&quot;.
-    </t>
-    <t>
-If several entries in an &quot;ordered-by user&quot; leaf-list are modified
-in the same &lt;edit&#8209;config&gt; request, the entries are modified
-one at a time, in the order of the XML elements in the request.
-    </t>
-    <t>
-In a &lt;copy&#8209;config&gt; or in an &lt;edit&#8209;config&gt; with a &quot;replace&quot; operation
-that covers the entire leaf-list, the leaf-list order is the same as
-the order of the XML elements in the request.
-    </t>
-    <t>
-When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
-elements of procedure for a leaf-list node are as follows:
-    </t>
-<t>
- <list style="symbols">
- <t>
-If the operation is &quot;merge&quot; or &quot;replace&quot;, the leaf-list entry is
-created if it does not exist.
- </t>
- <t>
-If the operation is &quot;create&quot;, the leaf-list entry is created if it
-does not exist.  If the leaf-list entry already exists, a
-&quot;data&#8209;exists&quot; error is returned.
- </t>
- <t>
-If the operation is &quot;delete&quot;, the entry is deleted from the
-leaf&nbhy;list if it exists.  If the leaf-list entry does not exist, a
-&quot;data&#8209;missing&quot; error is returned.
- </t>
- </list>
-</t>
 </section>
 <section title="Usage Example" anchor="leaf-list-xml-encoding-example">
         <figure>
@@ -4145,71 +4065,11 @@ A corresponding XML instance example:
             ]]></artwork>
         </figure>
     <t>
-To create a new element in this list, using the default &lt;edit&#8209;config&gt;
-operation &quot;merge&quot;:
+A corresponding JSON instance example:
     </t>
         <figure>
             <artwork><![CDATA[
-  <rpc message-id="101"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <edit-config>
-      <target>
-        <running/>
-      </target>
-      <config>
-        <system xmlns="urn:example:config">
-          <services>
-            <ssh>
-              <allow-user>eric</allow-user>
-            </ssh>
-          </services>
-        </system>
-      </config>
-    </edit-config>
-  </rpc>
-            ]]></artwork>
-        </figure>
-    <t>
-Given the following ordered-by user leaf-list:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  leaf-list cipher {
-    type string;
-    ordered-by user;
-    description
-      "A list of ciphers.";
-  }
-            ]]></artwork>
-        </figure>
-    <t>
-The following would be used to insert a new cipher &quot;blowfish&#8209;cbc&quot; after
-&quot;3des&#8209;cbc&quot;:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <rpc message-id="102"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:yang="urn:ietf:params:xml:ns:yang:1">
-    <edit-config>
-      <target>
-        <running/>
-      </target>
-      <config>
-        <system xmlns="urn:example:config">
-          <services>
-            <ssh>
-              <cipher nc:operation="create"
-                      yang:insert="after"
-                      yang:value="3des-cbc">blowfish-cbc</cipher>
-            </ssh>
-          </services>
-        </system>
-      </config>
-    </edit-config>
-  </rpc>
+  "allow-user": ["alice", "bob"]
             ]]></artwork>
         </figure>
 </section>
