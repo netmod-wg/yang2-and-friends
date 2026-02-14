@@ -482,7 +482,7 @@ conformance information.  Other mechanisms may be defined by future
 specifications.
     </t>
     <t>
-        A NETCONF server MUST announce the modules it implements <!-- FIXME: (see
+        A NETCONF server MUST announce the modules it implements <!-- FIXME after DT upload: (see
 <xref relative="implementing" target="I.D.yn-netmod-yang-2"/>) --> by implementing the YANG module
 &quot;ietf&#8209;yang&#8209;library&quot; defined in
 <xref target="RFC8525"/> and listing all implemented modules in
@@ -579,7 +579,7 @@ leaf-list entry&apos;s XML element.
     </t>
     <t>
 In an &quot;ordered-by user&quot; leaf-list, the attributes &quot;insert&quot; and &quot;value&quot;
-in the YANG XML namespace <!-- FIXME: (<xref relative="yang-namespace" target="I.D.yn-netconf-netconf-2"/>) --> can be used to control where
+in the YANG XML namespace (<xref target="yang-namespace"/>) can be used to control where
 in the leaf-list the entry is inserted.  These can be used during
 &quot;create&quot; operations to insert a new leaf-list entry, or during &quot;merge&quot;
 or &quot;replace&quot; operations to insert a new leaf-list entry or move an
@@ -626,6 +626,277 @@ leaf&nbhy;list if it exists.  If the leaf-list entry does not exist, a
  </li>
  </ul>
 
+        </section>
+        <section title="From Section 7.7.10 (Usage Example) for leaf-lists">
+          <aside><t>RFC 6241 doesn't discuss ordering at all!</t></aside>
+    <t>
+To create a new element in this list, using the default &lt;edit&#8209;config&gt;
+operation &quot;merge&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="101"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config">
+          <services>
+            <ssh>
+              <allow-user>eric</allow-user>
+            </ssh>
+          </services>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+    <t>
+Given the following ordered-by user leaf-list:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  leaf-list cipher {
+    type string;
+    ordered-by user;
+    description
+      "A list of ciphers.";
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+The following would be used to insert a new cipher &quot;blowfish&#8209;cbc&quot; after
+&quot;3des&#8209;cbc&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="102"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:yang="urn:ietf:params:xml:ns:yang:1">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config">
+          <services>
+            <ssh>
+              <cipher nc:operation="create"
+                      yang:insert="after"
+                      yang:value="3des-cbc">blowfish-cbc</cipher>
+            </ssh>
+          </services>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+        </section>
+
+        <section title="From Section 7.8.6 (NETCONF &lt;edit-config&gt; Operations, for lists)">
+    <t>
+List entries can be created, deleted, replaced, and modified through
+&lt;edit&#8209;config&gt; by using the &quot;operation&quot; attribute in the list&apos;s XML
+element.  In each case, the values of all keys are used to
+uniquely identify a list entry.  If all keys are not specified for a
+list entry, a &quot;missing&#8209;element&quot; error is returned.
+    </t>
+    <t>
+In an &quot;ordered-by user&quot; list, the attributes &quot;insert&quot; and &quot;key&quot; in the
+YANG XML namespace (<xref target="yang-namespace"/>) can be used to control where in the
+list the entry is inserted.  These can be used during &quot;create&quot;
+operations to insert a new list entry, or during &quot;merge&quot; or &quot;replace&quot;
+operations to insert a new list entry or move an existing one.
+    </t>
+    <t>
+The &quot;insert&quot; attribute can take the values &quot;first&quot;, &quot;last&quot;, &quot;before&quot;,
+and &quot;after&quot;.  If the value is &quot;before&quot; or &quot;after&quot;, the &quot;key&quot; attribute
+MUST also be used, to specify an existing element in the list.  The
+value of the &quot;key&quot; attribute is the key predicates of the full
+instance identifier (see <!-- FIXME after DT upload: <xref section="9.13" target="I.D.yn-netmod-yang-2"/> -->) for the list entry.
+    </t>
+    <t>
+If no &quot;insert&quot; attribute is present in the &quot;create&quot; operation, it
+defaults to &quot;last&quot;.
+    </t>
+    <t>
+If several entries in an &quot;ordered-by user&quot; list are modified
+in the same &lt;edit&#8209;config&gt; request, the entries are modified
+one at a time, in the order of the XML elements in the request.
+    </t>
+    <t>
+In a &lt;copy&#8209;config&gt; or in an &lt;edit&#8209;config&gt; with a &quot;replace&quot; operation
+that covers the entire list, the list entry order is the same as the
+order of the XML elements in the request.
+    </t>
+    <t>
+When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
+elements of procedure for a list node are as follows:
+    </t>
+ <ul>
+ <li>
+If the operation is &quot;merge&quot; or &quot;replace&quot;, the list entry is created
+if it does not exist.  If the list entry already exists and the
+&quot;insert&quot; and &quot;key&quot; attributes are present, the list entry is moved
+according to the values of the &quot;insert&quot; and &quot;key&quot; attributes.  If
+the list entry exists and the &quot;insert&quot; and &quot;key&quot; attributes are not
+present, the list entry is not moved.
+ </li>
+ <li>
+If the operation is &quot;create&quot;, the list entry is created if it does
+not exist.  If the list entry already exists, a &quot;data&#8209;exists&quot; error
+is returned.
+ </li>
+ <li>
+If the operation is &quot;delete&quot;, the entry is deleted from the list if
+it exists.  If the list entry does not exist, a &quot;data&#8209;missing&quot;
+error is returned.
+ </li>
+ </ul>
+        </section>
+        <section title="From Section 7.8.7 (Usage Example) for lists">
+          <aside><t>RFC 6241 doesn't discuss ordering at all!</t></aside>
+    <t>
+To create a new user &quot;barney&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="101"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config">
+          <user nc:operation="create">
+            <name>barney</name>
+            <type>admin</type>
+            <full-name>Barney Rubble</full-name>
+          </user>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+    <t>
+To change the type of &quot;fred&quot; to &quot;superuser&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="102"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config">
+          <user>
+            <name>fred</name>
+            <type>superuser</type>
+          </user>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+    <t>
+Given the following ordered-by user list:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  list user {
+    description
+      "This is a list of users in the system.";
+    ordered-by user;
+    config true;
+
+    key "first-name surname";
+
+    leaf first-name {
+      type string;
+    }
+    leaf surname {
+      type string;
+    }
+    leaf type {
+      type string;
+    }
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+The following would be used to insert a new user &quot;barney rubble&quot; after
+the user &quot;fred flintstone&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="101"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:yang="urn:ietf:params:xml:ns:yang:1">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config"
+             xmlns:ex="urn:example:config">
+          <user nc:operation="create"
+                yang:insert="after"
+                yang:key="[ex:first-name='fred']
+                          [ex:surname='flintstone']">
+            <first-name>barney</first-name>
+            <surname>rubble</surname>
+            <type>admin</type>
+          </user>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
+    <t>
+The following would be used to move the user &quot;barney rubble&quot; before the user
+&quot;fred flintstone&quot;:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <rpc message-id="102"
+       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+       xmlns:yang="urn:ietf:params:xml:ns:yang:1">
+    <edit-config>
+      <target>
+        <running/>
+      </target>
+      <config>
+        <system xmlns="urn:example:config"
+             xmlns:ex="urn:example:config">
+          <user nc:operation="merge"
+                yang:insert="before"
+                yang:key="[ex:name='fred']
+                          [ex:surname='flintstone']">
+            <first-name>barney</first-name>
+            <surname>rubble</surname>
+          </user>
+        </system>
+      </config>
+    </edit-config>
+  </rpc>
+            ]]></artwork>
+        </figure>
         </section>
       </section>
     </section>

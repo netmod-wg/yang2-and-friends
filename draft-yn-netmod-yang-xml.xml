@@ -355,6 +355,59 @@ leaf-list foo {
             </section>
 
             <section title='The "list" Data Node'>
+                <!-- this part from RFC 7950 Section 7.8.5 (XML Encoding Rules) -->
+                <t>A list is encoded as a series of XML elements, one for each entry in the
+                list. Each element's local name is the list's identifier, and its namespace is
+                the module's XML namespace (see <xref target="names"/>).  There is no XML
+                element surrounding the list as a whole.</t>
+                <t>The list's key nodes are encoded as subelements to the list's identifier
+                element, in the same order as they are defined within the "key" statement.</t>
+                <t>The rest of the list's child nodes are encoded as subelements to the list
+                element, after the keys. If the list defines RPC or action input or output
+                parameters, the subelements are encoded in the same order as they are defined
+                within the "list" statement. Otherwise, the subelements are encoded in any
+                order.</t>
+                <t>Any whitespace between the subelements to the list entry is insignificant,
+                i.e., an implementation MAY insert whitespace characters between
+                subelements.</t>
+                <t>The XML elements representing list entries MUST appear in the order
+                specified by the user if the list is "ordered-by user"; otherwise, the order
+                is implementation dependent. The XML elements representing list entries MAY be
+                interleaved with elements for siblings of the list, unless the list defines
+                RPC or action input or output parameters.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.4 (The "list" Data Node) -->
+                <t>Example: For the list definition</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+  list bar {
+    key foo;
+    leaf foo {
+      type uint8;
+    }
+    leaf baz {
+      type string;
+    }
+  }
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<bar>
+    <foo>123</foo>
+    <baz>zig</baz>
+</bar>
+<bar>
+    <foo>456</foo>
+    <baz>zag</baz>
+</bar>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "anydata" Data Node' anchor="anydata">
