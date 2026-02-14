@@ -3569,31 +3569,20 @@ A corresponding XML instance example:
             ]]></artwork>
         </figure>
     <t>
-Since the &lt;ssh&gt; element is present, SSH is enabled.
-    </t>
-    <t>
-To delete a container with an &lt;edit&#8209;config&gt;:
+A corresponding JSON instance example:
     </t>
         <figure>
-            <artwork><![CDATA[
-  <rpc message-id="101"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <edit-config>
-      <target>
-        <running/>
-      </target>
-      <config>
-        <system xmlns="urn:example:config">
-          <services>
-            <ssh nc:operation="delete"/>
-          </services>
-        </system>
-      </config>
-    </edit-config>
-  </rpc>
+          <artwork><![CDATA[
+  "system": {
+    "services": {
+      "ssh": [null]
+    }
+  }
             ]]></artwork>
         </figure>
+    <t>
+Since the &lt;ssh&gt; element is present, SSH is enabled.
+    </t>
 </section>
 </section>
 <section title="The &quot;leaf&quot; Statement" anchor="leaf">
