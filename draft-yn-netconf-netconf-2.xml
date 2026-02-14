@@ -470,12 +470,12 @@ could be encoded in NETCONF as:
             ]]></artwork>
         </figure>
         </section>
-        <section title="From 5.3.1 (YANG XML Namespace)" anchor="yang-namespace">
+        <section title="From Section 5.3.1 (YANG XML Namespace)" anchor="yang-namespace">
          <t>YANG defines an XML namespace for NETCONF &lt;edit&#8209;config&gt; operations,
          &lt;error&#8209;info&gt; content, and the &lt;action&gt; element.  The name of this
          namespace is &quot;urn:ietf:params:xml:ns:yang:1&quot;.</t>
         </section>
-        <section title="From 5.6.4 (Announcing Conformance Information in NETCONF)" anchor="announce">
+        <section title="From Section 5.6.4 (Announcing Conformance Information in NETCONF)" anchor="announce">
     <t>
 This document defines the following mechanism for announcing
 conformance information.  Other mechanisms may be defined by future
@@ -517,7 +517,7 @@ server and only update the cache if the &quot;module&#8209;set&#8209;id&quot; va
     </t>
         </section>
 
-        <section title="From 7.5.8 (NETCONF &lt;edit-config&gt; Operations, for containers)">
+        <section title="From Section 7.5.8 (NETCONF &lt;edit-config&gt; Operations, for containers)">
     <t>
 Containers can be created, deleted, replaced, and modified through
 &lt;edit&#8209;config&gt; by using the &quot;operation&quot; attribute
@@ -536,6 +536,29 @@ elements of procedure for the container node are as follows:
  <li>
 If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
 does not exist.
+ </li>
+ <li>
+If the operation is &quot;create&quot;, the node is created if it does not
+exist.  If the node already exists, a &quot;data&#8209;exists&quot; error is
+returned.
+ </li>
+ <li>
+If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
+the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
+ </li>
+</ul>
+        </section>
+
+        <section title="From Section 7.6.7 (NETCONF &lt;edit-config&gt; Operations, for leafs)">
+    <t>
+When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
+elements of procedure for the leaf node are as follows:
+    </t>
+<ul>
+ <li>
+If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
+does not exist, and its value is set to the value found in the XML
+RPC data.
  </li>
  <li>
 If the operation is &quot;create&quot;, the node is created if it does not

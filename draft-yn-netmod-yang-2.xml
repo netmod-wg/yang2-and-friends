@@ -3757,30 +3757,6 @@ data tree.
 This constraint is enforced according to the rules in <xref target="constraints"/>.
     </t>
 </section>
-<section title="NETCONF &lt;edit-config&gt; Operations" anchor="leaf-edit">
-    <t>
-When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
-elements of procedure for the leaf node are as follows:
-    </t>
-<t>
- <list style="symbols">
- <t>
-If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
-does not exist, and its value is set to the value found in the XML
-RPC data.
- </t>
- <t>
-If the operation is &quot;create&quot;, the node is created if it does not
-exist.  If the node already exists, a &quot;data&#8209;exists&quot; error is
-returned.
- </t>
- <t>
-If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
-the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
- </t>
- </list>
-</t>
-</section>
 <section title="Usage Example" anchor="leaf-xml-encoding-example">
     <t>
 Given the following &quot;leaf&quot; statement, placed in the previously defined
