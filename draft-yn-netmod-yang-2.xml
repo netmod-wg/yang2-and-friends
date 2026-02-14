@@ -3534,39 +3534,6 @@ Within a container, the &quot;container&quot;, &quot;leaf&quot;, &quot;list&quot
 define child nodes to the container.
     </t>
 </section>
-<section title="NETCONF &lt;edit-config&gt; Operations">
-    <t>
-Containers can be created, deleted, replaced, and modified through
-&lt;edit&#8209;config&gt; by using the &quot;operation&quot; attribute
-(see Section&nbsp;7.2 in <xref target="RFC6241"/>) in the
-container&apos;s XML element.
-    </t>
-    <t>
-If a container does not have a &quot;presence&quot; statement and the last child
-node is deleted, the NETCONF server MAY delete the container.
-    </t>
-    <t>
-When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
-elements of procedure for the container node are as follows:
-    </t>
-<t>
- <list style="symbols">
- <t>
-If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
-does not exist.
- </t>
- <t>
-If the operation is &quot;create&quot;, the node is created if it does not
-exist.  If the node already exists, a &quot;data&#8209;exists&quot; error is
-returned.
- </t>
- <t>
-If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
-the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
- </t>
- </list>
-</t>
-</section>
 <section title="Usage Example" anchor="container-xml-encoding-example">
     <t>
 Given the following container definition:
