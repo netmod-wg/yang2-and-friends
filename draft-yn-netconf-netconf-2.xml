@@ -517,7 +517,7 @@ server and only update the cache if the &quot;module&#8209;set&#8209;id&quot; va
     </t>
         </section>
 
-        <section title="From 7.5.8 (NETCONF <edit-config> Operations, for containers)">
+        <section title="From 7.5.8 (NETCONF &lt;edit-config&gt; Operations, for containers)">
     <t>
 Containers can be created, deleted, replaced, and modified through
 &lt;edit&#8209;config&gt; by using the &quot;operation&quot; attribute
@@ -532,23 +532,21 @@ node is deleted, the NETCONF server MAY delete the container.
 When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
 elements of procedure for the container node are as follows:
     </t>
-<t>
- <list style="symbols">
- <t>
+<ul>
+ <li>
 If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
 does not exist.
- </t>
- <t>
+ </li>
+ <li>
 If the operation is &quot;create&quot;, the node is created if it does not
 exist.  If the node already exists, a &quot;data&#8209;exists&quot; error is
 returned.
- </t>
- <t>
+ </li>
+ <li>
 If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
 the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
- </t>
- </list>
-</t>
+ </li>
+</ul>
         </section>
       </section>
     </section>
@@ -4650,6 +4648,7 @@ IANA has added the following capabilities to the registry:
         <!-- YANG -->
 			 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6021.xml"/>
         <!-- YANG types -->
+       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/> <!-- NETCONF -->
        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml"/> <!-- YANG Library -->
      </references>
       <references>
