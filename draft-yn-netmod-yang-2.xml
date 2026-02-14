@@ -3534,29 +3534,6 @@ Within a container, the &quot;container&quot;, &quot;leaf&quot;, &quot;list&quot
 define child nodes to the container.
     </t>
 </section>
-<section title="XML Encoding Rules">
-    <t>
-A container node is encoded as an XML element.  The element&apos;s local
-name is the container&apos;s identifier, and its namespace is the
-module&apos;s XML namespace (see <xref target="namespace"/>).
-    </t>
-    <t>
-The container&apos;s child nodes are encoded as subelements to the
-container element.  If the container defines RPC or
-action input or output parameters, these subelements are encoded in
-the same order as they are defined within the &quot;container&quot; statement.
-Otherwise, the subelements are encoded in any order.
-    </t>
-    <t>
-Any whitespace between the subelements to the container is
-insignificant, i.e., an implementation MAY insert whitespace
-characters between subelements.
-    </t>
-    <t>
-If a non-presence container does not have any child nodes, the
-container may or may not be present in the XML encoding.
-    </t>
-</section>
 <section title="NETCONF &lt;edit-config&gt; Operations">
     <t>
 Containers can be created, deleted, replaced, and modified through

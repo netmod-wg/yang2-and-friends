@@ -250,6 +250,44 @@ module example-barmod {
             </section>
 
             <section title='The "container" Data Node'>
+              <!-- this part from RFC 7950 Section 7.5.7 (XML Encoding Rules) -->
+                <t>A container node is encoded as an XML element. The element's local name is
+                the container's identifier, and its namespace is the module's XML namespace
+                (see <xref target="names"/>).</t>
+                <t>The container's child nodes are encoded as subelements to the container
+                element. If the container defines RPC or action input or output parameters,
+                these subelements are encoded in the same order as they are defined within the
+                "container" statement. Otherwise, the subelements are encoded in any
+                order.</t>
+                <t>Any whitespace between the subelements to the container is insignificant,
+                i.e., an implementation MAY insert whitespace characters between
+                subelements.</t>
+                <t>If a non-presence container does not have any child nodes, the container
+                may or may not be present in the XML encoding.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.2 (The "container" Data Node) -->
+                <t>Example: For the container definition</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+container bar {
+  leaf foo {
+    type uint8;
+  }
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is valid XML-encoded instance data:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<bar>
+    <foo>123</foo>
+</bar>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "leaf-list" Data Node'>
