@@ -237,6 +237,11 @@ module example-barmod {
             <xref target="identityref"/> and <xref target="instance-identifier"/>
             for details.</t>
 
+            <t>To improve readability of XML, a client or server
+            that generates XML or XPath that uses prefixes SHOULD use the prefix
+            defined by the module as the XML namespace prefix, unless there is a
+            conflict.</t>
+
         </section>
 
         <section title="Encoding of YANG Data Node Instances">

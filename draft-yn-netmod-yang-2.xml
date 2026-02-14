@@ -2690,12 +2690,6 @@ When used inside the &quot;module&quot; statement, the &quot;prefix&quot; statem
 defines the prefix suggested to be used when this module is imported.
     </t>
     <t>
-To improve readability of the NETCONF XML, a NETCONF client or server
-that generates XML or XPath that uses prefixes SHOULD use the prefix
-defined by the module as the XML namespace prefix, unless there is a
-conflict.
-    </t>
-    <t>
 When used inside the &quot;import&quot; statement, the &quot;prefix&quot; statement
 defines the prefix to be used when accessing definitions inside the
 imported module.  When a reference to an identifier from the imported
