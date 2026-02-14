@@ -2633,22 +2633,24 @@ A module typically has the following layout:
     <t>
 The &quot;yang&#8209;version&quot; statement specifies which version of the YANG
 language was used in developing the module.  The statement&apos;s argument
-is a string.  It MUST contain the value &quot;1.1&quot; for YANG modules defined
+is a string.  It MUST contain the value &quot;2.0&quot; for YANG modules defined
 based on this specification.
     </t>
     <t>
 A module or submodule that doesn&apos;t contain the &quot;yang&#8209;version&quot;
 statement, or one that contains the value &quot;1&quot;, is developed for YANG
-version 1, defined in <xref target="RFC6020"/>.
+version 1, defined in <xref target="RFC6020"/>.  A module or submodule that
+contains the &quot;yang&#8209;version&quot; with value &quot;1.1&quot; is developed
+for YANG version 1.1, defined in <xref target="RFC7950"/>.
     </t>
     <t>
-Handling of the &quot;yang&#8209;version&quot; statement for versions other than &quot;1.1&quot;
+Handling of the &quot;yang&#8209;version&quot; statement for versions other than &quot;2.0&quot;
 (the version defined here) is out of scope for this specification.
 Any document that defines a higher version will need to define the
 backward compatibility of such a higher version.
     </t>
     <t>
-For compatibility between YANG versions 1 and 1.1, see <xref target="coexistence"/>.
+For compatibility between YANG versions, see <xref target="coexistence"/>.
     </t>
 </section>
 <section title="The &quot;namespace&quot; Statement" anchor="namespace">
@@ -9864,35 +9866,36 @@ reordered.  If new data definition statements are added, they can be
 added anywhere in the sequence of existing substatements.
     </t>
 </section>
-<section title="Coexistence with YANG Version 1" anchor="coexistence">
+<section title="Coexistence with YANG Version 1 and 1.1" anchor="coexistence">
     <t>
-A YANG version 1.1 module MUST NOT include a YANG version 1 submodule,
-and a YANG version 1 module MUST NOT include a YANG version 1.1
+A YANG version 2.0 module MUST only include YANG version 2.0 submodules.
+A YANG version 1 or 1.1 module MUST NOT include a YANG version 2.0
 submodule.
     </t>
     <t>
-A YANG version 1 module or submodule MUST NOT import a YANG version&nbsp;1.1
+A YANG version 1 or 1.1 module or submodule MUST NOT import a YANG version&nbsp;2.0
 module by revision.
     </t>
     <t>
-A YANG version 1.1 module or submodule MAY import a YANG version
-1 module by revision.
+A YANG version 2.0 module or submodule MAY import a YANG version
+1.1 or 1 module by revision.
     </t>
     <t>
-If a YANG version 1 module A imports module B without revision and
-module B is updated to YANG version 1.1, a server MAY implement both
-of these modules (A and B) at the same time.  In such cases, a NETCONF
-server MUST advertise both modules using the rules defined in
-<!-- FIXME: <xref target="announce"/> -->, and SHOULD advertise module A and the
+If a YANG version 1 or 1.1 module A imports module B without revision and
+module B is updated to YANG version 2.0, a server MAY implement both
+of these modules (A and B) at the same time.  In such cases, a
+server MUST advertise both modules using the rules (see
+<xref target="implementing"/>), and SHOULD advertise module A and the
 latest revision of module B that is specified with YANG version 1
-according to the rules defined in <xref target="RFC6020"/>.
+according to the rules defined in <xref target="RFC6020"/> or version 1.1
+according to the rules defined in <xref target="RFC7950"/>.
     </t>
     <t>
 This rule exists in order to allow implementations of existing YANG
-version 1 modules together with YANG version 1.1 modules.  Without
-this rule, updating a single module to YANG version 1.1 would have a
+version 1 and version 1.1 modules together with YANG version 2.0 modules.  Without
+this rule, updating a single module to YANG version 2.0 would have a
 cascading effect on modules that import it, requiring all of them to
-also be updated to YANG version 1.1, and so on.
+also be updated to YANG version 2.0, and so on.
     </t>
 </section>
 <section title="YIN" anchor="YIN">
