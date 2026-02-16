@@ -5114,10 +5114,11 @@ refinement.  See <xref target="extension"/> for details.
  </list>
 </t>
 </section>
-<section title="XML Encoding Rules">
+<section title="Encoding Rules">
+     <!-- cannot move to "yang-xml" doc because it doesn't document schema nodes -->
     <t>
 Each node in the grouping is encoded as if it was defined inline,
-even if it is imported from another module with another XML
+even if it is imported from another module with another
 namespace.
     </t>
 </section>
@@ -5150,6 +5151,18 @@ A corresponding XML instance example:
     <ip>192.0.2.1</ip>
     <port>80</port>
   </http-server>
+            ]]></artwork>
+        </figure>
+    <t>
+A corresponding JSON instance example:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  "http-server": {
+    "name": "extern-web",
+    "ip": "192.0.2.1",
+    "port": 80
+  }
             ]]></artwork>
         </figure>
     <t>
