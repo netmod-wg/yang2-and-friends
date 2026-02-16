@@ -4634,7 +4634,7 @@ The constraint is further enforced according to the rules in
     </t>
 </section>
 <section title="Encoding Rules">
-     <!-- cannot move to "yang-xml" doc because it doesn't document schema nodes -->
+     <!-- FIXME: cannot move to "yang-xml" doc because it doesn't document schema nodes -->
      <t>
 The choice and case nodes are not visible in encodings.
     </t>
@@ -5115,7 +5115,7 @@ refinement.  See <xref target="extension"/> for details.
 </t>
 </section>
 <section title="Encoding Rules">
-     <!-- cannot move to "yang-xml" doc because it doesn't document schema nodes -->
+     <!-- FIXME: cannot move to "yang-xml" doc because it doesn't document schema nodes -->
     <t>
 Each node in the grouping is encoded as if it was defined inline,
 even if it is imported from another module with another
@@ -5411,67 +5411,7 @@ If any node has a &quot;when&quot; statement that would evaluate to
 <?rfc compact="no"?>
 </section>
 </section>
-<section title="NETCONF XML Encoding Rules">
-    <t>
-An rpc node is encoded as a child XML element to the &lt;rpc&gt; element, as
-designated by the substitution group &quot;rpcOperation&quot; in <xref target="RFC6241"/>.  The
-element&apos;s local name is the rpc&apos;s identifier, and its namespace is the
-module&apos;s XML namespace (see <xref target="namespace"/>).
-    </t>
-    <t>
-Input parameters are encoded as child XML elements to the rpc node&apos;s
-XML element, in the same order as they are defined within the
-&quot;input&quot; statement.
-    </t>
-    <t>
-If the RPC operation invocation succeeded and no output parameters are
-returned, the &lt;rpc&#8209;reply&gt; contains a single &lt;ok/&gt; element
-defined in <xref target="RFC6241"/>.  If output parameters are returned,
-they are encoded as child elements to the &lt;rpc&#8209;reply&gt; element
-defined in <xref target="RFC6241"/>, in the same order as they are
-defined within the &quot;output&quot; statement.
-    </t>
-</section>
-<section title="Usage Example">
-    <t>
-The following example defines an RPC operation:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  module example-rock {
-    yang-version 1.1;
-    namespace "urn:example:rock";
-    prefix "rock";
-
-    rpc rock-the-house {
-      input {
-        leaf zip-code {
-          type string;
-        }
-      }
-    }
-  }
-            ]]></artwork>
-        </figure>
-    <t>
-A corresponding XML instance example of the complete rpc and rpc&nbhy;reply:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <rpc message-id="101"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <rock-the-house xmlns="urn:example:rock">
-      <zip-code>27606-0100</zip-code>
-    </rock-the-house>
-  </rpc>
-
-  <rpc-reply message-id="101"
-             xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <ok/>
-  </rpc-reply>
-            ]]></artwork>
-        </figure>
-</section>
+<!-- FIXME: cannot document in "yang-xml" doc because it doesn't document schema nodes? -->
 </section>
 <section title="The &quot;action&quot; Statement" anchor="action">
     <t>
