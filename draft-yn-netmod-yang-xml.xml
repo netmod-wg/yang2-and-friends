@@ -460,8 +460,25 @@ anydata data;
             </section>
 
             <section title='The "anyxml" Data Node'>
+                <!-- this part from RFC 7950 Section 7.11 (XML Encoding Rules, for anyxml) -->
+<!--
+    <t>
+An anyxml node is encoded as an XML element.  The element&apos;s local name
+is the anyxml&apos;s identifier, and its namespace is the module&apos;s XML
+namespace (see <xref target="namespace"/>).  The value of the anyxml node is encoded
+as XML content of this element.
+    </t>
+    <t>
+Note that any XML prefixes used in the encoding are local to each
+instance encoding.  This means that the same XML may be encoded
+differently by different implementations.
+    </t>
+-->
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.6 (The "anyxml" Data Node) -->
                 <t>An anyxml node is encoded the same as an anydata node.  Please see
                 <xref target="anydata"/> for how the anydata node is encoded.</t>
+
             </section>
 
             <section title="Metadata Objects">

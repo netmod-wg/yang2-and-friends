@@ -929,6 +929,37 @@ the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
  </li>
  </ul>
         </section>
+        <section title="From Section 7.11.3 (NETCONF &lt;edit-config&gt; Operations, for anyxml)">
+    <t>
+An anyxml node is treated as an opaque chunk of data.  This data can
+be modified in its entirety only.
+    </t>
+    <t>
+Any &quot;operation&quot; attributes present on subelements of an anyxml node
+are ignored by the NETCONF server.
+    </t>
+    <t>
+When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
+elements of procedure for the anyxml node are as follows:
+    </t>
+ <ul>
+ <li>
+If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
+does not exist, and its value is set to the XML content of the
+anyxml node found in the XML RPC data.
+ </li>
+ <li>
+If the operation is &quot;create&quot;, the node is created if it does not
+exist, and its value is set to the XML content of the anyxml node
+found in the XML RPC data.  If the node already exists, a
+&quot;data&#8209;exists&quot; error is returned.
+ </li>
+ <li>
+If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
+the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
+ </li>
+ </ul>
+        </section>
       </section>
     </section>
     <section anchor="transportRequirements" numbered="true" toc="default">
