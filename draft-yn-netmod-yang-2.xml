@@ -5730,6 +5730,7 @@ data node.
 </texttable>
 <?rfc compact="no"?>
 </section>
+<!-- FIXME: cannot document in "yang-xml" doc because it doesn't document schema nodes?
 <section title="XML Encoding Rules">
     <t>
 All data nodes defined in the &quot;augment&quot; statement are defined as XML
@@ -5741,6 +5742,7 @@ When a node is augmented, the augmenting child nodes are encoded as
 subelements to the augmented node, in any order.
     </t>
 </section>
+-->
 <section title="Usage Example">
     <t>
 In namespace urn:example:interface-module, we have:
@@ -5806,6 +5808,29 @@ A corresponding XML instance example:
             ]]></artwork>
         </figure>
     <t>
+A corresponding JSON instance example:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  "interface-module:interfaces": {
+    "ifEntry": [
+      {
+        "ifIndex": 1,
+        "ifDescr": "Flintstone Inc Ethernet A562",
+        "ifType": "ethernetCsmacd",
+        "ifMtu": 1500
+      },
+      {
+        "ifIndex": 2,
+        "ifDescr": "Flintstone Inc DS0",
+        "ifType": "ds0",
+        "ds0:ds0ChannelNumber": 1
+      }
+    ]
+  }
+            ]]></artwork>
+        </figure>
+    <t>
 As another example, suppose we have the choice defined in
 <xref target="choice-example"/>.  The following construct can be used to extend the
 protocol definition:
@@ -5843,6 +5868,30 @@ or
       <other:smtp/>
     </ex:protocol>
   </ex:system>
+            ]]></artwork>
+        </figure>
+    <t>
+A corresponding JSON instance example:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  "choice-example:system": {
+    "protocol": {
+      "tcp": [null]
+    }
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+or
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  "choice-example:system": {
+    "protocol": {
+      "other:smtp": [null]
+    }
+  }
             ]]></artwork>
         </figure>
 </section>
