@@ -411,6 +411,52 @@ leaf-list foo {
             </section>
 
             <section title='The "anydata" Data Node' anchor="anydata">
+                <!-- this part from RFC 7950 Section 7.10 (XML Encoding Rules, for anydata) -->
+                <t>An anydata node is encoded as an XML element. The element's local name is
+                the anydata's identifier, and its namespace is the module's XML namespace (see
+                <xref target="names"/>). The value of the anydata node is a set of nodes,
+                which are encoded as XML subelements to the anydata element.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.5 (The "anydata" Data Node) -->
+                <t>The anydata data node serves as a container for an arbitrary set of
+                nodes that otherwise appear as normal YANG-modeled data.  A data
+                model for anydata content may or may not be known at runtime.  In the
+                latter case, converting XML-encoded instances to other encodings, such
+                as JSON <xref target="RFC7951"/> may be impossible.</t>
+
+                <!-- this part from RFC 7950 Section 7.11.2 (XML Encoding Rules, for anyxml) -->
+                <t>Note that any XML prefixes used in the encoding are local to each
+                instance encoding.  This means that the same XML may be encoded differently
+                by different implementations.</t>
+
+                <!-- copy/paste/edit from RFC 7951 Section 5.5 (The "anydata" Data Node) -->
+                <t>Example: For the anydata definition</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+anydata data;
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<data>
+    <notification xmlns="urn:ietf:params:xml:ns:netmod:notification">
+        <eventTime>2014-07-29T13:43:01Z</eventTime>
+        <event xmlns="https://example.com/example-event">
+            <event-class>fault</event-class>
+            <reporting-entity>
+                <card>Ethernet0</card>
+            </reporting-entity>
+            <severity>major</severity>
+        </event>
+    </notification>
+</data>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "anyxml" Data Node'>

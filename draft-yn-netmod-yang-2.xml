@@ -4756,48 +4756,6 @@ configuration data.
 </texttable>
 <?rfc compact="no"?>
 </section>
-<section title="XML Encoding Rules">
-    <t>
-An anydata node is encoded as an XML element.  The element&apos;s local name
-is the anydata&apos;s identifier, and its namespace is the module&apos;s XML
-namespace (see <xref target="namespace"/>).  The value of the anydata node is a set
-of nodes, which are encoded as XML subelements to the
-anydata element.
-    </t>
-</section>
-<section title="NETCONF &lt;edit-config&gt; Operations">
-    <t>
-An anydata node is treated as an opaque chunk of data.  This data can
-be modified in its entirety only.
-    </t>
-    <t>
-Any &quot;operation&quot; attributes present on subelements of an anydata node
-are ignored by the NETCONF server.
-    </t>
-    <t>
-When a NETCONF server processes an &lt;edit&#8209;config&gt; request, the
-elements of procedure for the anydata node are as follows:
-    </t>
-<t>
- <list style="symbols">
- <t>
-If the operation is &quot;merge&quot; or &quot;replace&quot;, the node is created if it
-does not exist, and its value is set to the subelements of the
-anydata node found in the XML RPC data.
- </t>
- <t>
-If the operation is &quot;create&quot;, the node is created if it does not
-exist, and its value is set to the subelements of the anydata node
-found in the XML RPC data.  If the node already exists, a
-&quot;data&#8209;exists&quot; error is returned.
- </t>
- <t>
-If the operation is &quot;delete&quot;, the node is deleted if it exists.  If
-the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
- </t>
- </list>
-</t>
-</section>
 <section title="Usage Example">
     <t>
 Given the following &quot;anydata&quot; statement:
