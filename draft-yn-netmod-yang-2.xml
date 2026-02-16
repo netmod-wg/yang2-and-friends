@@ -4633,9 +4633,10 @@ The constraint is further enforced according to the rules in
 <xref target="constraints"/>.
     </t>
 </section>
-<section title="XML Encoding Rules">
-    <t>
-The choice and case nodes are not visible in XML.
+<section title="Encoding Rules">
+     <!-- cannot move to "yang-xml" doc because it doesn't document schema nodes -->
+     <t>
+The choice and case nodes are not visible in encodings.
     </t>
     <t>
 The child nodes of the selected &quot;case&quot; statement MUST be encoded in
@@ -4677,26 +4678,13 @@ A corresponding XML instance example:
             ]]></artwork>
         </figure>
     <t>
-To change the protocol from TCP to UDP:
+A corresponding JSON instance example:
     </t>
         <figure>
             <artwork><![CDATA[
-  <rpc message-id="101"
-       xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
-       xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
-    <edit-config>
-      <target>
-        <running/>
-      </target>
-      <config>
-        <system xmlns="urn:example:config">
-          <protocol>
-            <udp nc:operation="create"/>
-          </protocol>
-        </system>
-      </config>
-    </edit-config>
-  </rpc>
+  "protocol": {
+    "tcp": [null]
+  }
             ]]></artwork>
         </figure>
 </section>
