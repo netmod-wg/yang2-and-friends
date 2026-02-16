@@ -5591,119 +5591,7 @@ statements for nodes in the notification tree are ignored.
 </texttable>
 <?rfc compact="no"?>
 </section>
-<section title="NETCONF XML Encoding Rules">
-    <t>
-A notification node that is defined on the top level of a module is
-encoded as a child XML element to the &lt;notification&gt; element defined
-in &quot;NETCONF Event Notifications&quot; <xref target="RFC5277"/>.
-The element&apos;s local name is the notification&apos;s identifier, and
-its namespace is the module&apos;s XML namespace (see <xref target="namespace"/>).
-    </t>
-    <t>
-When a notification node is defined as a child to a data node, the
-&lt;notification&gt; element defined in <xref target="RFC5277"/>
-contains a hierarchy of nodes that identifies the node in
-the datastore.  It MUST contain all containers and list nodes from the
-top level down to the list or container containing the notification.
-For lists, all key leafs MUST also be included.  The innermost
-container or list contains an XML element that carries the name of the
-defined notification.
-    </t>
-    <t>
-The notification&apos;s child nodes are encoded as subelements to the
-notification node&apos;s XML element, in any order.
-    </t>
-</section>
-<section title="Usage Example">
-    <t>
-The following example defines a notification at the top level of a
-module:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  module example-event {
-    yang-version 1.1;
-    namespace "urn:example:event";
-    prefix "ev";
-
-    notification event {
-      leaf event-class {
-        type string;
-      }
-      leaf reporting-entity {
-        type instance-identifier;
-      }
-      leaf severity {
-        type string;
-      }
-    }
-  }
-            ]]></artwork>
-        </figure>
-    <t>
-A corresponding XML instance example of the complete notification:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <notification
-    xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
-    <eventTime>2008-07-08T00:01:00Z</eventTime>
-    <event xmlns="urn:example:event">
-      <event-class>fault</event-class>
-      <reporting-entity>
-        /ex:interface[ex:name='Ethernet0']
-      </reporting-entity>
-      <severity>major</severity>
-    </event>
-  </notification>
-            ]]></artwork>
-        </figure>
-    <t>
-The following example defines a notification in a data node:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  module example-interface-module {
-    yang-version 1.1;
-    namespace "urn:example:interface-module";
-    prefix "if";
-
-    container interfaces {
-      list interface {
-        key "name";
-        leaf name {
-          type string;
-        }
-        notification interface-enabled {
-          leaf by-user {
-            type string;
-          }
-        }
-      }
-    }
-  }
-            ]]></artwork>
-        </figure>
-    <t>
-A corresponding XML instance example of the complete notification:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <notification
-    xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
-    <eventTime>2008-07-08T00:01:00Z</eventTime>
-    <interfaces xmlns="urn:example:interface-module">
-      <interface>
-        <name>eth1</name>
-        <interface-enabled>
-          <by-user>fred</by-user>
-        </interface-enabled>
-      </interface>
-    </interfaces>
-  </notification>
-            ]]></artwork>
-        </figure>
-</section>
+<!-- FIXME: cannot document in "yang-xml" doc because it doesn't document schema nodes? -->
 </section>
 <section title="The &quot;augment&quot; Statement" anchor="augment">
     <t>
@@ -10885,7 +10773,6 @@ compromised.
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5234.xml"/>
-    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5277.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7405.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>

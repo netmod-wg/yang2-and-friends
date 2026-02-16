@@ -960,7 +960,7 @@ the node does not exist, a &quot;data&#8209;missing&quot; error is returned.
  </li>
  </ul>
         </section>
-        <section title="From Section 7.14.4 (NETCONF &lt;edit-config&gt; Operations, for rpc)">
+        <section title="From Section 7.14.4 (NETCONF XML Encoding Rules, for rpc)">
     <t>
 An rpc node is encoded as a child XML element to the &lt;rpc&gt; element, as
 designated by the substitution group &quot;rpcOperation&quot; in <xref target="RFC6241"/>.  The
@@ -1021,7 +1021,7 @@ A corresponding XML instance example of the complete rpc and rpc&nbhy;reply:
             ]]></artwork>
         </figure>
         </section>
-        <section title="From Section 7.15.2 (NETCONF &lt;edit-config&gt; Operations, for action)">
+        <section title="From Section 7.15.2 (NETCONF XML Encoding Rules, for action)">
     <t>
 When an action is invoked, an element with the local name &quot;action&quot; in
 the namespace &quot;urn:ietf:params:xml:ns:yang:1&quot; (see <xref target="yang-namespace"/>)
@@ -1116,6 +1116,119 @@ A corresponding XML instance example of the complete rpc and rpc&nbhy;reply:
       2014-07-29T13:42:12Z
     </reset-finished-at>
   </rpc-reply>
+            ]]></artwork>
+        </figure>
+        </section>
+        <section title="From Section 7.16.2 (NETCONF XML Encoding Rules, for notification)">
+    <t>
+A notification node that is defined on the top level of a module is
+encoded as a child XML element to the &lt;notification&gt; element defined
+in &quot;NETCONF Event Notifications&quot; <xref target="RFC5277"/>.
+The element&apos;s local name is the notification&apos;s identifier, and
+its namespace is the module&apos;s XML namespace (see <xref target="namespace"/>).
+    </t>
+    <t>
+When a notification node is defined as a child to a data node, the
+&lt;notification&gt; element defined in <xref target="RFC5277"/>
+contains a hierarchy of nodes that identifies the node in
+the datastore.  It MUST contain all containers and list nodes from the
+top level down to the list or container containing the notification.
+For lists, all key leafs MUST also be included.  The innermost
+container or list contains an XML element that carries the name of the
+defined notification.
+    </t>
+    <t>
+The notification&apos;s child nodes are encoded as subelements to the
+notification node&apos;s XML element, in any order.
+    </t>
+        </section>
+        <section title="From Section 7.16.3 (Usage Example, for notification)">
+    <t>
+The following example defines a notification at the top level of a
+module:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  module example-event {
+    yang-version 1.1;
+    namespace "urn:example:event";
+    prefix "ev";
+
+    notification event {
+      leaf event-class {
+        type string;
+      }
+      leaf reporting-entity {
+        type instance-identifier;
+      }
+      leaf severity {
+        type string;
+      }
+    }
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+A corresponding XML instance example of the complete notification:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <notification
+    xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+    <eventTime>2008-07-08T00:01:00Z</eventTime>
+    <event xmlns="urn:example:event">
+      <event-class>fault</event-class>
+      <reporting-entity>
+        /ex:interface[ex:name='Ethernet0']
+      </reporting-entity>
+      <severity>major</severity>
+    </event>
+  </notification>
+            ]]></artwork>
+        </figure>
+    <t>
+The following example defines a notification in a data node:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  module example-interface-module {
+    yang-version 1.1;
+    namespace "urn:example:interface-module";
+    prefix "if";
+
+    container interfaces {
+      list interface {
+        key "name";
+        leaf name {
+          type string;
+        }
+        notification interface-enabled {
+          leaf by-user {
+            type string;
+          }
+        }
+      }
+    }
+  }
+            ]]></artwork>
+        </figure>
+    <t>
+A corresponding XML instance example of the complete notification:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  <notification
+    xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+    <eventTime>2008-07-08T00:01:00Z</eventTime>
+    <interfaces xmlns="urn:example:interface-module">
+      <interface>
+        <name>eth1</name>
+        <interface-enabled>
+          <by-user>fred</by-user>
+        </interface-enabled>
+      </interface>
+    </interfaces>
+  </notification>
             ]]></artwork>
         </figure>
         </section>
@@ -5213,6 +5326,7 @@ IANA has added the following capabilities to the registry:
         <!-- UTF-8 -->
 			 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml"/>
         <!-- IETF XML registry -->
+       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5277.xml"/> <!-- NETCONF Event Notifications -->
        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5717.xml"/>
         <!-- NETCONF notifs -->
 			 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml"/>
