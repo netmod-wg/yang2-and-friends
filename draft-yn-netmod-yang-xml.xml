@@ -35,10 +35,15 @@
             configuration data, state data, parameters of Remote Procedure Call (RPC)
             operations or actions, and notifications defined using XML.</t>
         </abstract>
-        <note title="GitHub Information (to be removed by RFC Editor)">
-            <t>This document is developed on GitHub (<eref target="https://github.com/netmod-wg/yang2-and-friends"/>).
-            If you wish to contribute, please consider opening a pull request (PR).  Please see the
-            README file for details.</t>
+        <note removeInRFC="true">
+            <name>Discussion Venues</name>
+            <t>Discussion of this document takes place on the Network
+            Modeling Working Group mailing list, which is archived at
+            <eref target="https://mailarchive.ietf.org/arch/browse/netmod"/>.
+            To subscribe: <eref target="https://www.ietf.org/mailman/listinfo/netmod"/></t>
+            <t>This document is developed on GitHub at <eref target="https://github.com/netmod-wg/yang2-and-friends"/>).
+            If you wish to contribute, please consider opening a pull request (PR).
+            See the README file for details.</t>
         </note>
     </front>
     <middle>
