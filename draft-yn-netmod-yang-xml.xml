@@ -487,6 +487,7 @@ differently by different implementations.
             </section>
 
             <section title="Metadata Objects">
+                <!-- FIXME: move RFC 7952 here? -->
                 <t>Apart from instances of YANG data nodes, XML elements MAY contain
                 XML attributes for special purposes, such as encoding metadata
                 <xref target="RFC7952"/>. The exact syntax and semantics of such

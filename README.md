@@ -13,7 +13,7 @@ request (PR) can update them together.
 
 The initial goal is to make the document not be XML or NETCONF specific,
 thus setting a baseline for subsequent changes.  This is accomplished by:
-  - removing the "XML Encoding" sections.
+  - removing the "XML Encoding Rules" sections.
   - removing the "NETCONF &ltl;edit-config&gt; Operations" sections.
   - removing the "NETCONF XML Encoding Rules" sections.
   - removing the "Example Usage" sections.

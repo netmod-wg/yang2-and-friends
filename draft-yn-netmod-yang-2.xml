@@ -97,9 +97,15 @@
     <t>This document defines version 2.0 of the YANG language.  YANG&nbsp;2.0
     is a major release of the YANG language. Whilst it is by and large the
     same as RFC&nbsp;7950, the following changes exist:</t>
-    <ol>
-      <li>Each "XML Encoding Example" and "NETCONF XML Example" in <xref target="lang-over"/>
-          (Language Overview) now has a matching "JSON Encoding Example" or "RESTCONF JSON Example".</li>
+  <ol>
+      <li>Removed the "XML Encoding Rules" sections.  This content was moved to the 'yang-xml' document.</li>
+      <li>Removed the "NETCONF &ltl;edit-config&gt; Operations" sections.  This content was moved to the 'netconf-2' document.</li>
+      <li>Removed the "NETCONF XML Encoding Rules" sections.  This content was moved to the 'netconf-2' document.</li>
+      <li>Removed the "Example Usage" sections.  This content was deemed redundant.</li>
+      <li>Each "XML Encoding Example" in <xref target="lang-over"/> (Language Overview)
+          now has a matching "JSON Encoding Example".</li>
+      <li>Each "NETCONF XML Example" in <xref target="lang-over"/> (Language Overview)
+          now has a matching "RESTCONF JSON Example".</li>
     </ol>
 </section>
 
