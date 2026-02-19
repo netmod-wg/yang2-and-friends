@@ -69,10 +69,10 @@
     with rules for how they relate.</t>
 
     <t>Historically, YANG has been used to manage network elements such as
-    routers, switches, and firewalls.  Thus said, it is observed that YANG
-    is suitable to any networked application having a programmatic interface
-    for configuration, operational state, asynchronous notifications, and/or
-    remote procedure calls (RPCs).</t>
+    routers, switches, and firewalls.  That said, YANG is suitable for defining
+    the API for any network application.  The key being that, in defining an
+    application's data model, both its API and persistence layers can be
+    automatically generated.</t>
 
     <t>YANG is high-level data modeling language, independent of any specific
     encoding or any specific protocol.  Encodings (e.g., XML <xref target="I-D.yn-netmod-yang-xml"/>,
@@ -99,13 +99,15 @@
     same as RFC&nbsp;7950, the following changes exist:</t>
   <ol>
       <li>Removed the "XML Encoding Rules" sections.  This content was moved to the 'yang-xml' document.</li>
-      <li>Removed the "NETCONF &ltl;edit-config&gt; Operations" sections.  This content was moved to the 'netconf-2' document.</li>
+      <li>Removed the "NETCONF &lt;edit-config&gt; Operations" sections.  This content was moved to the 'netconf-2' document.</li>
       <li>Removed the "NETCONF XML Encoding Rules" sections.  This content was moved to the 'netconf-2' document.</li>
       <li>Removed the "Example Usage" sections.  This content was deemed redundant.</li>
+      <li>Renamed the "NETCONF Constraint Enforcement Model" section to "Constraint Enforcement Model".</li>
       <li>Each "XML Encoding Example" in <xref target="lang-over"/> (Language Overview)
           now has a matching "JSON Encoding Example".</li>
       <li>Each "NETCONF XML Example" in <xref target="lang-over"/> (Language Overview)
           now has a matching "RESTCONF JSON Example".</li>
+      <li>Added a "Protocols Mappings" section.</li>
     </ol>
 </section>
 
@@ -341,6 +343,9 @@ Throughout this document, there are many examples of YANG statements.
 These examples are supposed to illustrate certain features and are
 not supposed to be complete, valid YANG modules.
     </t>
+    <t>Also throughout this document, there are many usage examples.
+    These examples are sometimes out of context and therefore
+    incomplete.</t>
 </section>
 </section>
 <section title="YANG Overview">
@@ -349,9 +354,14 @@ This non-normative section is intended to give a high-level
 overview of YANG to first-time readers.
     </t>
 <section title="Functional Overview">
-    <t>
-YANG is a language originally designed to model data for the NETCONF
-protocol.  A YANG module defines hierarchies of data that can be used
+  <t>
+YANG is primarily designed to model application data, which can be
+used to automate the generation of both APIs and CLIs.  YANG may
+also be used to model document data, for use independent of an
+application.
+  </t>
+  <t>
+A YANG module defines hierarchies of data that can be used
 for protocol operations including configuration, state data,
 RPCs, and notifications.  This allows a complete description of all
 data sent between a protocol client and server.
@@ -1343,6 +1353,30 @@ data: }
 The &quot;notification&quot; statement is covered in <xref target="notification"/>.
     </t>
 </section>
+</section>
+<section title="Protocols Mappings">
+  <t>YANG data models are often conveyed by network management protocols,
+  expressing both the operations that can be performed and the content
+  conveyed by the operations.  This section discusses the
+  behavior expected by protocols.</t>
+  <section title="Basic Conformance">
+    <t>For YANG data models having "config false" data nodes, there MUST be a way for
+      clients to get the "config false" data.</t>
+    <t>For YANG data models having "config true" data nodes, there MUST be a way for
+      clients to get and edit the "config true" data.  For data models having
+      "ordered-by user" statements, there MUST be a way for clients to control the
+      order.</t>
+    <t>For YANG data models having "rpc" and "action" statements, there MUST be a way
+      for clients invoke the operation with the "input" data, if any, and get back
+      either "output" data, if any, or an error message, if needed.  For errors,
+      an "rpc-error" containing the "error-tag", "error-message", and "error-app-tag"
+      values defined in this document MUST be supported.</t>
+    <t>For YANG data models having "notification" statements, there MUST be a way for
+      clients to receive notifications.</t>
+  </section>
+  <section title="YANG 2.0 Conformance">
+    <t>NMDA MUST be supported.</t>
+  </section>
 </section>
 </section>
 <section title="Language Concepts">
@@ -6644,7 +6678,7 @@ If a key leaf is defined in a grouping that is used in a list, the
 &quot;uses&quot; statement MUST NOT have a &quot;when&quot; statement.
     </t>
     <t>
-See <xref target="edit-config-processing"/> for additional information.
+See <xref target="config-processing"/> for additional information.
     </t>
     <t>
 The XPath expression is conceptually evaluated in the following
@@ -6807,7 +6841,7 @@ the &quot;when&quot; expression is deleted by the server.
  </list>
 </t>
 </section>
-<section title="NETCONF Constraint Enforcement Model">
+<section title="Constraint Enforcement Model">
     <t>
 For configuration data, there are three windows when constraints MUST
 be enforced:
@@ -6818,7 +6852,7 @@ be enforced:
 during parsing of RPC payloads
  </t>
  <t>
-during processing of the &lt;edit&#8209;config&gt; operation
+during processing of a configuration operation
  </t>
  <t>
 during validation
@@ -6830,7 +6864,7 @@ Each of these scenarios is considered in the following sections.
     </t>
 <section title="Payload Parsing" anchor="payload-parsing">
     <t>
-When content arrives in RPC payloads, it MUST be well-formed XML,
+When content arrives in RPC payloads, it MUST be well-formed document,
 following the hierarchy and content rules defined by the set of models
 the server implements.
     </t>
@@ -6884,10 +6918,10 @@ element that is not a list whose &quot;ordered&#8209;by&quot; property is
  </list>
 </t>
 </section>
-<section title="NETCONF &lt;edit-config&gt; Processing" anchor="edit-config-processing">
+<section title="Configuration Processing" anchor="config-processing">
     <t>
-After the incoming data is parsed, the NETCONF server performs the
-&lt;edit&#8209;config&gt; operation by applying the data to the configuration
+After the incoming data is parsed, the server performs the
+configuration operation by applying the data to the configuration
 datastore.  During this processing, the following errors MUST be
 detected:
     </t>
