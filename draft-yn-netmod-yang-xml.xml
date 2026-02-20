@@ -502,40 +502,408 @@ differently by different implementations.
             data node depends on the type of that data node, as specified in the
             following subsections.</t>
 
+            <t>All of the examples in this section use a YANG "leaf-list" solely
+            as means to illustrate multiple variations of the type.</t>
+
             <section title="Numeric Types">
+
+                <!-- copy/paste/edit from RFC 7951 Section 6.1 (Numeric Types) -->
+                <t>All numeric types (int8, int16, int32, uint8, uint16, uint32,
+                int64, uint64, and decimal64) are represented as a text value
+                conforming the to lexical representation for the type described
+                in <xref section="9.2.1" target="RFC7950"/> and
+                <xref section="9.3.1" target="RFC7950"/> .</t>
+
+                <!-- this part is new -->
+                <t>Example: For the "int16" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type int16;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>4711</foo>    <!-- positive decimal value -->
+<foo>-123</foo>    <!-- negative decimal value -->
+<foo>0xf00f</foo>  <!-- positive hexadecimal value -->
+<foo>-0xf</foo>    <!-- negative hexadecimal value -->
+<foo>052</foo>     <!-- positive octal value -->
+<foo>-052</foo>    <!-- negative octal value -->
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "string" Type'>
+
+                <!-- this part is new, not from RFC 7951 Section 6.2 -->
+                <t>A "string" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.4.1" target="RFC7950"/>.</t>
+
+                <t>Example: For the "string" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type string;
+}
+]]>
+                    </artwork>
+                </figure>
+
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>This string is all on one line.</foo>
+<foo>This string is:
+	- on more than one line.
+	- contains tab characters.
+</foo>
+]]>
+                    </artwork>
+                </figure>
+
             </section>
 
             <section title='The "boolean" Type'>
+
+                <!-- copy/paste/edit from RFC 7951 Section 6.3 (The "boolean" Type) -->
+                <t>A "boolean" value is represented as the corresponding
+                literal name "true" or "false".</t>
+
+                <!-- this part is new -->
+                <t>Example: For the "boolean" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type boolean;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>true</foo>
+<foo>false</foo>
+]]>
+                    </artwork>
+                </figure>
             </section>
 
             <section title='The "enumeration" Type'>
-            </section>
+                <t>An "enumeration" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.6.1" target="RFC7950"/>.</t>
+                <t>Example: For the "enumeration" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type enumeration {
+    enum one;
+    enum two;
+    enum three;
+  }
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>one</foo>
+<foo>two</foo>
+<foo>three</foo>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- enumeration -->
 
             <section title='The "bits" Type'>
-            </section>
+                <t>A "bits" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.7.2" target="RFC7950"/>.</t>
+                <t>Example: For the "bits" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type bits {
+     bit zero;
+     bit one;
+     bit two;
+  }
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>zero</foo>
+<foo>zero one</foo>
+<foo>zero one two</foo>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- bits -->
 
             <section title='The "binary" Type'>
-            </section>
+                <t>A "binary" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.8.2" target="RFC7950"/>.</t>
+                <t>Example: For the "binary" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type binary;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>SGVsbG8gQm9iCg==</foo>  <!-- Hello Bob -->
+<foo>SGVsbG8gQWxpY2UK</foo>  <!-- Hello Alice -->
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- binary -->
 
             <section title='The "leafref" Type'>
-            </section>
+                <t>A "leafref" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.9.4" target="RFC7950"/>.</t>
+                <t>Example: For the "leafref" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list status {
+  type leafref {
+    path "/my-leaf";      // assume current value is "up"
+  }
+}
+
+leaf-list ifname {
+  type leafref {
+    path "/my-list/key";  // assume current key values are
+  }                       // "eth0", "eth1", and "eth2"
+}
+
+leaf-list color {
+  type leafref {
+    path "/my-leaf-list";  // assume current list values are
+  }                        // "red", "green", and "blue"
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is valid XML-encoded instance data:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<status>up</status>
+
+<ifname>eth0</ifname>
+<ifname>eth1</ifname>
+<ifname>eth2</ifname>
+
+<color>red</color>
+<color>green</color>
+<color>blue</color>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- leafref -->
 
             <section title='The "identityref" Type' anchor="identityref">
-            </section>
+                <!-- this part from RFC 7950 Section 9.10.3 (Lexical Representation for identityref) -->
+                <t>A "identityref" value is represented as XML text containing the
+                namespace qualified name of the referenced identity. As defined in
+                <xref target="XML-NAMES"/>, namespaces are either explicitly qualified
+                using a prefix, or implicitly qualified using the default namespace
+                for the XML element that containing the identityref value.</t>
+
+                <t>Example: For the "identityref" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+module example-crypto {
+  yang-version 1.1;
+  namespace "urn:example:crypto";
+  prefix ec;
+
+  identity symmetric-key-alg {
+    description
+      "Base identity used to identify symmetric-key crypto
+       algorithms.";
+  }
+
+  identity blowfish {
+    base symmetric-key-alg;
+    description
+      "Identity used to identify the 'blowfish' algorithm.";
+  }
+}
+
+module example-my-crypto {
+  yang-version 1.1;
+  namespace "urn:example:my-crypto";
+  prefix emc;
+
+  import example-crypto {
+    prefix ec;
+  }
+
+  identity aes {
+    base ec:symmetric-key-alg;
+    description
+      "Identity used to identify the 'aes' algorithm.";
+    }
+
+  leaf-list foo {
+    type identityref {
+      base ec:symmetric-key-alg;
+    }
+  }
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo xmlns:ec="urn:example:crypto">ec:blowfish</foo>
+<foo xmlns:x="urn:example:crypto">x:blowfish</foo>
+<foo xmlns:emc="urn:example:my-crypto">emc:aes</foo>
+<foo>aes</foo>
+]]>
+                    </artwork>
+                </figure>
+                <t>In the above example:
+                <ul>
+                  <li>The first element uses the prefix from the imported module,
+                    per best practice.</li>
+                  <li>The second element uses a local prefix, as is allowed.</li>
+                  <li>The third element uses the prefix from the local module,
+                    per best practice but, as before, a local prefix is allowed.</li>
+                  <li>The fourth element uses the default namespace, assuming
+                    it is "urn:example:my-crypto".</li>
+                </ul>
+                </t>
+            </section> <!-- identityref -->
 
             <section title='The "empty" Type'>
-            </section>
+                <t>An "empty" value is represented as an empty XML element.</t>
+                <t>Example: For the "empty" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf foo {
+  type empty;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo/>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- empty -->
 
             <section title='The "union" Type'>
-            </section>
+                <t>A "union" value is represented as character data conforming
+                the to lexical representation for the type described in
+                <xref section="9.12.2" target="RFC7950"/>.</t>
+                <t>Example: For the "union" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type union {
+    type int32;
+    type enumeration {
+      enum "unbounded";
+    }
+  }
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>16</foo>
+<foo>32</foo>
+<foo>64</foo>
+<foo>unbounded</foo>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- union -->
 
             <section title='The "instance-identifier" Type' anchor="instance-identifier">
-            </section>
+                <!-- this part from from RFC 7950 Section 9.13.2 (Lexical Representation, for instance-identifier) -->
+                <t>A "instance-identifier" value is represented as XML text.
+                All node names in an instance-identifier value MUST be qualified with
+                explicit namespace prefixes, and these prefixes MUST be declared
+                in the XML namespace scope in the instance-identifier&apos;s XML
+                element.</t>
+                <t>Any prefixes used in the encoding are local to each instance encoding.
+                This means that the same instance-identifier may be encoded
+                differently by different implementations.</t>
 
-        </section>
+                <!-- this part is new -->
+                <t>Example: For the "instance-identifier" type</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+leaf-list foo {
+  type instance-identifier;
+}
+]]>
+                    </artwork>
+                </figure>
+                <t>the following is a valid XML-encoded instance:</t>
+                <figure>
+                    <artwork>
+<![CDATA[
+<foo>/ex:system/ex:services/ex:ssh</foo>
+<foo>/ex:system/ex:services/ex:ssh/ex:port</foo>
+<foo>/ex:system/ex:user[ex:name='fred']</foo>
+<foo>/ex:system/ex:user[ex:name='fred']/ex:type</foo>
+<foo>/ex:system/ex:server[ex:ip='192.0.2.1'][ex:port='80']</foo>
+<foo>/ex:system/ex:service[ex:name='foo'][ex:enabled='']</foo>
+<foo>/ex:system/ex:services/ex:ssh/ex:cipher[.='blowfish-cbc']</foo>
+<foo>/ex:stats/ex:port[3]</foo>
+]]>
+                    </artwork>
+                </figure>
+            </section> <!-- instance-identifier -->
+
+        </section> <!-- Representing YANG Data Types in XML Values -->
 
         <section title="IANA Considerations" anchor="iana">
         </section>
@@ -559,6 +927,29 @@ differently by different implementations.
                     <author fullname="Francois Yergeau" surname="Yergeau" initials="F."/>
                     <date year="2008" month="November" day="26"/>
                 </front><seriesInfo name="W3C Recommendation" value="REC-xml-20081126"/>
+            </reference>
+            <reference anchor="XML-NAMES" target="http://www.w3.org/TR/2009/REC-xml-names-20091208">
+                <front>
+                    <title>Namespaces in XML 1.0 (Third Edition)</title>
+                    <author initials="T." surname="Bray" fullname="Tim Bray">
+                        <organization/>
+                    </author>
+                    <author initials="D." surname="Hollander" fullname="Dave Hollander">
+                        <organization/>
+                    </author>
+                    <author initials="A." surname="Layman" fullname="Andrew Layman">
+                        <organization/>
+                    </author>
+                    <author initials="R." surname="Tobin" fullname="Richard Tobin">
+                        <organization/>
+                    </author>
+                    <author initials="H." surname="Thompson" fullname="Henry Thompson">
+                        <organization/>
+                    </author>
+                    <date month="December" day="8" year="2009"/>
+                </front>
+                <seriesInfo name="World Wide Web Consortium Recommendation" value="REC-xml-names-20091208"/>
+                <format type="HTML" target="http://www.w3.org/TR/2009/REC-xml-names-20091208"/>
             </reference>
         </references>
         <references title="Informative References">

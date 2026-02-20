@@ -60,7 +60,7 @@
     </note>
 </front>
 <middle>
-<section title="Introduction">
+<section title="Introduction" anchor="intro">
     <t>YANG <xref target="RFC6020"/> <xref target="RFC7950"/> is a data modeling
     language used to model configuration, operational state, asynchronous
     notifications, and remote procedure calls (RPCs) for network management.
@@ -6979,7 +6979,7 @@ numeric types (<xref target="range"/>).
     </t>
     <t>
 The lexical representation of a value of a certain type is used
-in the XML encoding and when specifying default values
+in the encoding and when specifying default values
 and numerical ranges in YANG modules.
     </t>
 <section title="Canonical Representation" anchor="canonical">
@@ -6991,7 +6991,7 @@ represented as &quot;+17&quot; or &quot;17&quot;.  Implementations MUST support 
 lexical representations specified in this document.
     </t>
     <t>
-When a server sends XML-encoded data, it MUST use the canonical
+When a server sends encoded data, it MUST use the canonical
 form defined in this section.  Other encodings may introduce alternate
 representations.  Note, however, that values in the data tree are
 conceptually stored in the canonical representation as defined in this
@@ -7002,9 +7002,8 @@ MUST match the data type&apos;s lexical representation, but the exact
 format is implementation dependent.
     </t>
     <t>
-Some types have a lexical representation that depends on the encoding,
-e.g., the XML context in which they occur.  These types do not have a
-canonical form.
+Some types have a lexical representation that depends on the encoding
+These types do not have a canonical form.
     </t>
 </section>
 <section title="The Integer Built-In Types" anchor="integers">
@@ -7061,7 +7060,7 @@ followed by the character &quot;0&quot;, followed by a number of octal digits.
     </t>
     <t>
 Note that if a default value in a YANG module has a leading zero
-(&quot;0&quot;), it is interpreted as an octal number.  In the XML encoding, an
+(&quot;0&quot;), it is interpreted as an octal number.  In the encoding, an
 integer is always interpreted as a decimal number, and leading zeros
 are allowed.
     </t>
@@ -7302,7 +7301,7 @@ the rule &quot;yang&#8209;string&quot; in <xref target="grammar"/>.
 <section title="Lexical Representation">
     <t>
 A string value is lexically represented as character data in
-the XML encoding.
+the encoding.
     </t>
 </section>
 <section title="Canonical Form">
@@ -8033,6 +8032,10 @@ the leaf it references.
     </t>
 </section>
 <section title="Usage Example">
+  <t>Instance examples in this secton use the XML encoding.  XML is
+  just one possible encoding.  See the <xref target="intro"/> for
+  more information about encodings.</t>
+
     <t>
 With the following list:
     </t>
@@ -8247,10 +8250,7 @@ modules implemented by the server.
 <section title="Lexical Representation">
     <t>
 An identityref is lexically represented as the referred identity&apos;s
-qualified name as defined in <xref target="XML-NAMES"/>.  If the
-prefix is not present, the namespace of the identityref is the default
-namespace in&nbsp;effect on the element that contains the identityref
-value.
+namespace qualified name.
     </t>
     <t>
 When an identityref is given a default value using the &quot;default&quot;
@@ -8273,8 +8273,11 @@ value is the prefix for the current module.
 </section>
 <section title="Canonical Form">
     <t>
-Since the lexical form depends on the XML context in which the
+Since the lexical form depends on the encoding context in which the
 value occurs, this type does not have a canonical form.
+Specifically, the value may or may not be prefixed.  Furthermore,
+in some encodings, the prefix used may be locally defined (see
+<xref section="identityref" target="I-D.yn-netmod-yang-xml"/>).
     </t>
 </section>
 <section title="Usage Example">
@@ -8304,49 +8307,10 @@ module:
     }
 
     container aes-parameters {
-      when "../crypto = 'mc:aes'";
+      when "../crypto = 'mc:aes'"; // identity used in an XPath
       ...
     }
   }
-            ]]></artwork>
-        </figure>
-    <t>
-the following is an example of how the leaf &quot;crypto&quot; can be
-encoded, if the value is the &quot;des3&quot; identity defined in
-the &quot;des&quot; module:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <crypto xmlns:des="urn:example:des">des:des3</crypto>
-            ]]></artwork>
-        </figure>
-    <t>
-Any prefixes used in the encoding are local to each instance encoding.
-This means that the same identityref may be encoded differently by
-different implementations.  For example, the following example encodes
-the same leaf as above:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <crypto xmlns:x="urn:example:des">x:des3</crypto>
-            ]]></artwork>
-        </figure>
-    <t>
-If the &quot;crypto&quot; leaf&apos;s value is instead &quot;aes&quot;,
-defined in the &quot;example&#8209;my&#8209;crypto&quot; module, it can
-be encoded as:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <crypto xmlns:mc="urn:example:my-crypto">mc:aes</crypto>
-            ]]></artwork>
-        </figure>
-    <t>
-or, using the default namespace:
-    </t>
-        <figure>
-            <artwork><![CDATA[
-  <crypto>aes</crypto>
             ]]></artwork>
         </figure>
 </section>
@@ -8386,11 +8350,19 @@ With the following leaf:
             ]]></artwork>
         </figure>
     <t>
-the following is an example of a valid encoding if the leaf exists:
+the following is an XML example if the leaf exists:
     </t>
         <figure>
             <artwork><![CDATA[
   <enable-qos/>
+            ]]></artwork>
+        </figure>
+    <t>
+the following is an JSON example if the leaf exists:
+    </t>
+        <figure>
+            <artwork><![CDATA[
+  "enable-qos": [null]
             ]]></artwork>
         </figure>
 </section>
@@ -8410,9 +8382,9 @@ type.
 A member type can be of any built-in or derived type.
     </t>
     <t>
-When generating an XML encoding, a value is encoded according to the
+When generating an encoding, a value is encoded according to the
 rules of the member type to which the value belongs.  When
-interpreting an XML encoding, a value is validated consecutively
+interpreting an encoding, a value is validated consecutively
 against each member type, in the order they are specified in the
 &quot;type&quot; statement, until a match is found.  The type that matched will
 be the type of the value for the node that was validated, and the
@@ -8486,16 +8458,8 @@ definitions:
         </figure>
     <t>
 assume that there exists an entry in the filter list with the name
-&quot;http&quot; and that the outbound-filter leaf has this value:
+&quot;http&quot; and that the outbound-filter leaf has this value.
     </t>
-        <figure>
-            <artwork><![CDATA[
-  <filter>
-    <name>http</name>
-  </filter>
-  <outbound-filter>http</outbound-filter>
-            ]]></artwork>
-        </figure>
     <t>
 If the filter entry &quot;http&quot; is removed, the outbound-filter
 leaf&apos;s value doesn&apos;t match the leafref, and the next member type is
@@ -8558,25 +8522,20 @@ statement (<xref target="require-instance"/>).
     <t>
 An instance-identifier value is lexically represented as a
 string.  All node names in an instance-identifier value MUST be
-qualified with explicit namespace prefixes, and these prefixes MUST be
-declared in the XML namespace scope in the instance-identifier&apos;s XML
-element.
-    </t>
-    <t>
-Any prefixes used in the encoding are local to each instance encoding.
-This means that the same instance-identifier may be encoded
-differently by different implementations.
+namespace qualified.  See encoding for details for how to qualify
+node names.
     </t>
 </section>
 <section title="Canonical Form">
     <t>
-Since the lexical form depends on the XML context in which the
+Since the lexical form depends on the context in which the
 value occurs, this type does not have a canonical form.
     </t>
 </section>
 <section title="Usage Example">
     <t>
-The following are examples of instance identifiers:
+The following are examples of instance identifiers, assuming
+the encoding requires a prefix ("ex") on every node name:
     </t>
         <figure>
             <artwork><![CDATA[
@@ -10967,7 +10926,7 @@ compromised.
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8407.xml"/>
     <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-core-comi.xml"/>
     <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-core-yang-cbor.xml"/>
-    <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.yn-netmod-yang-xml"/>
+    <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.yn-netmod-yang-xml.xml"/>
 
 <reference anchor="XSLT" target="http://www.w3.org/TR/1999/REC-xslt-19991116">
   <front>
