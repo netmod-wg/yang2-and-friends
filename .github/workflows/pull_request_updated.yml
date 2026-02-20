@@ -196,8 +196,8 @@ jobs:
         run: |
           cd mysite
           tar -czvf drafts.tgz */
-          mkdir test
-          cd test
+          mkdir _test_
+          cd _test_
           tar -xzvf ../drafts.tgz
 
       # upload site to github.io
