@@ -1,16 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
+
 <!DOCTYPE rfc [
   <!ENTITY nbsp    "&#160;">
   <!ENTITY zwsp   "&#8203;">
   <!ENTITY nbhy   "&#8209;">
   <!ENTITY wj     "&#8288;">
 ]>
+
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
 <?rfc rfcedstyle="yes"?>
 <?rfc compact="yes"?>
+
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="pre5378Trust200902" category="std" submissionType="IETF" updates="" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3" consensus="true" docName="draft-yn-netconf-netconf-2-latest">
 
   <!-- xml2rfc v2v3 conversion 3.21.0 -->

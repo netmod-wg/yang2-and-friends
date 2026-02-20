@@ -39,6 +39,7 @@
             README file for details.</t>
         </note>
     </front>
+
     <middle>
         <section title="Introduction">
             <t>This document defines the expected behavior for management protocols

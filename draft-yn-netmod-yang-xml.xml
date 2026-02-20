@@ -46,6 +46,7 @@
             See the README file for details.</t>
         </note>
     </front>
+
     <middle>
         <section title="Introduction">
             <t>This document defines encoding rules for representing YANG
