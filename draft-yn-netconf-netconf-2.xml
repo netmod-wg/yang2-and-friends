@@ -491,7 +491,8 @@ could be encoded in NETCONF as:
         <section title="From Section 5.6.4 (Announcing Conformance Information in NETCONF)" anchor="announce">
     <t>
 A NETCONF server MUST announce the modules it implements (see
-<xref target="implementing"/>) by implementing the YANG module
+<!-- FIXME after DT upload: <xref relative="implementing" target="I.D.yn-netmod-yang-2"/> -->
+) by implementing the YANG module
 &quot;ietf&#8209;yang&#8209;library&quot; defined in
 <xref target="RFC8525"/> and listing all implemented modules in
 the &quot;/modules&#8209;state/module&quot; list.
@@ -1239,9 +1240,6 @@ A corresponding XML instance example of the complete notification:
   </notification>
             ]]></artwork>
         </figure>
-=======
-</section>
->>>>>>> 90c9131b6bdc051ee0fa2c9505cfb4dfb7ed1ce9
         </section>
       </section>
     </section>
