@@ -57,10 +57,10 @@ for branch in $SORTED; do
     echo "    <td class=\"bg\">Branch <a href=\"https://github.com/netmod-wg/yang2-and-friends/tree/$branch\">\"$branch\"</a> merges into branch <a href=\"https://github.com/netmod-wg/yang2-and-friends/tree/$BASE\">\"$BASE\"</a>.</td>" >> index.html
   fi
 
-  echo "    <td nowrap class=\"bg\"> <table> <tr> <td class=\"fg\">yang-2:</td> <td nowrap><a href=\"$branch/draft-yn-netmod-yang-2-00.html\">html</a> / <a href=\"$branch/draft-yn-netmod-yang-2-00.txt\">text</a> / <a href=\"$branch/draft-yn-netmod-yang-2-00.xml\">xml</a></td> </tr>  </table> </td>" >> index.html
+  echo "    <td nowrap class=\"bg\"> <table> <tr> <td nowrap><a href=\"$branch/draft-yn-netmod-yang-2-00.html\">html</a> / <a href=\"$branch/draft-yn-netmod-yang-2-00.txt\">text</a> / <a href=\"$branch/draft-yn-netmod-yang-2-00.xml\">xml</a></td> </tr>  </table> </td>" >> index.html
 
   if [ $branch = "main" ]; then
-    echo "    <td nowrap class=\"bg\"><table> <tr> <td class=\"fg\">yang-2:</td> <td nowrap><a href=\"https://author-tools.ietf.org/iddiff?url_1=https://netmod-wg.github.io/yang2-and-friends/main/rfc7950.txt&url_2=https://netmod-wg.github.io/yang2-and-friends/main/draft-yn-netmod-yang-2-00.txt\">Diff with RFC7950</a><br><a href=\"https://author-tools.ietf.org/api/iddiff?doc_1=draft-yn-netmod-yang-2&url_2=https://netmod-wg.github.io/yang2-and-friends/main/draft-yn-netmod-yang-2-00.txt\"><s>Diff with Datatracker</s></a></td>  </tr> </table> </td>" >> index.html
+    echo "    <td nowrap class=\"bg\"><table> <tr> <td nowrap><a href=\"https://author-tools.ietf.org/iddiff?url_1=https://netmod-wg.github.io/yang2-and-friends/main/rfc7950.txt&url_2=https://netmod-wg.github.io/yang2-and-friends/main/draft-yn-netmod-yang-2-00.txt\">Diff with RFC7950</a><br><a href=\"https://author-tools.ietf.org/api/iddiff?doc_1=draft-yn-netmod-yang-2&url_2=https://netmod-wg.github.io/yang2-and-friends/main/draft-yn-netmod-yang-2-00.txt\"><s>Diff with Datatracker</s></a></td>  </tr> </table> </td>" >> index.html
   else
     echo "    <td nowrap class=\"bg\"> <table> <tr> <td class=\"fg\">yang-2:</td> <td nowrap><a href=\"https://author-tools.ietf.org/api/iddiff?url_1=https://netmod-wg.github.io/yang2-and-friends/$BASE/draft-yn-netmod-yang-2-00.txt&url_2=https://netmod-wg.github.io/yang2-and-friends/$branch/draft-yn-netmod-yang-2-00.txt\">Diff with Base</a></td> </tr> </table> </td>" >> index.html
   fi
