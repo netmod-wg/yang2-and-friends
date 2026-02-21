@@ -603,6 +603,7 @@ leaf-list foo {
             </section>
 
             <section title='The "enumeration" Type'>
+                <!-- this part is new -->
                 <t>An "enumeration" value is represented as character data conforming
                 the to lexical representation for the type described in
                 <xref section="9.6.1" target="RFC7950"/>.</t>
@@ -630,12 +631,14 @@ leaf-list foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- enumeration -->
+            </section>
 
             <section title='The "bits" Type'>
+                <!-- this part is new -->
                 <t>A "bits" value is represented as character data conforming
                 the to lexical representation for the type described in
                 <xref section="9.7.2" target="RFC7950"/>.</t>
+
                 <t>Example: For the "bits" type</t>
                 <figure>
                     <artwork>
@@ -660,9 +663,10 @@ leaf-list foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- bits -->
+            </section>
 
             <section title='The "binary" Type'>
+                <!-- this part is new -->
                 <t>A "binary" value is represented as character data conforming
                 the to lexical representation for the type described in
                 <xref section="9.8.2" target="RFC7950"/>.</t>
@@ -685,9 +689,10 @@ leaf-list foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- binary -->
+            </section>
 
             <section title='The "leafref" Type'>
+                <!-- this part is new -->
                 <t>A "leafref" value is represented as character data conforming
                 the to lexical representation for the type described in
                 <xref section="9.9.4" target="RFC7950"/>.</t>
@@ -709,7 +714,7 @@ leaf-list ifname {
 
 leaf-list color {
   type leafref {
-    path "/my-leaf-list";  // assume current list values are
+    path "/my-leaf-list";  // assume current values are
   }                        // "red", "green", and "blue"
 }
 ]]>
@@ -731,16 +736,17 @@ leaf-list color {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- leafref -->
+            </section>
 
             <section title='The "identityref" Type' anchor="identityref">
-                <!-- this part from RFC 7950 Section 9.10.3 (Lexical Representation for identityref) -->
-                <t>A "identityref" value is represented as XML text containing the
+                <!-- copy/paste/edit from RFC 7950 Section 9.10.3 (Lexical Representation for identityref) -->
+                <t>A "identityref" value is represented as character data containing the
                 namespace qualified name of the referenced identity. As defined in
                 <xref target="XML-NAMES"/>, namespaces are either explicitly qualified
                 using a prefix, or implicitly qualified using the default namespace
                 for the XML element that containing the identityref value.</t>
 
+                <!-- copy/paste/edit from RFC 7950 Section 9.10.5 (Usage Example for identityref) -->
                 <t>Example: For the "identityref" type</t>
                 <figure>
                     <artwork>
@@ -809,7 +815,7 @@ module example-my-crypto {
                     it is "urn:example:my-crypto".</li>
                 </ul>
                 </t>
-            </section> <!-- identityref -->
+            </section>
 
             <section title='The "empty" Type'>
                 <t>An "empty" value is represented as an empty XML element.</t>
@@ -831,7 +837,7 @@ leaf foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- empty -->
+            </section>
 
             <section title='The "union" Type'>
                 <t>A "union" value is represented as character data conforming
@@ -863,11 +869,11 @@ leaf-list foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- union -->
+            </section>
 
             <section title='The "instance-identifier" Type' anchor="instance-identifier">
                 <!-- this part from from RFC 7950 Section 9.13.2 (Lexical Representation, for instance-identifier) -->
-                <t>A "instance-identifier" value is represented as XML text.
+                <t>A "instance-identifier" value is represented as character data.
                 All node names in an instance-identifier value MUST be qualified with
                 explicit namespace prefixes, and these prefixes MUST be declared
                 in the XML namespace scope in the instance-identifier&apos;s XML
@@ -876,7 +882,7 @@ leaf-list foo {
                 This means that the same instance-identifier may be encoded
                 differently by different implementations.</t>
 
-                <!-- this part is new -->
+                <!-- this part is new, but related to RFC 7950 Section 9.13.4 (Usage Example for instance-identifier) -->
                 <t>Example: For the "instance-identifier" type</t>
                 <figure>
                     <artwork>
@@ -902,12 +908,13 @@ leaf-list foo {
 ]]>
                     </artwork>
                 </figure>
-            </section> <!-- instance-identifier -->
+            </section>
 
-        </section> <!-- Representing YANG Data Types in XML Values -->
+        </section>
 
         <section title="IANA Considerations" anchor="iana">
         </section>
+
         <section title="Security Considerations">
         </section>
 

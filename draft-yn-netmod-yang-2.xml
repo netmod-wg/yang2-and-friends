@@ -1376,7 +1376,8 @@ The &quot;notification&quot; statement is covered in <xref target="notification"
       clients to receive notifications.</t>
   </section>
   <section title="YANG 2.0 Conformance">
-    <t>NMDA MUST be supported.</t>
+    <t>This section specifies what behavior a server claiming to support YANG 2.0 must support.</t>
+    <t>Nothing yet...</t>
   </section>
 </section>
 </section>
