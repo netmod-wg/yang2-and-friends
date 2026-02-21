@@ -47,7 +47,7 @@ $(draft)-$(next_ver).xml: $(draft).xml
 
 $(draft)-$(next_ver).txt: $(draft)-$(next_ver).xml
 	@echo "Making $@ from $<..."
-	$(xml2rfc) --v3 $< -o $@ --text
+	$(xml2rfc) --v3 $< -o $@ --text --no-pagination
 
 $(draft)-$(next_ver).html: $(draft)-$(next_ver).xml
 	@echo "Making $@ from $<..."

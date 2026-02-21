@@ -16,7 +16,7 @@
 <?rfc strict="yes"?>
 
 <rfc ipr="pre5378Trust200902" category="std" submissionType="IETF" consensus="true"
-    xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-proto-latest">
+  xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-proto-latest">
     <front>
         <title abbrev="YANG Protocol Requirements">Requirements for YANG-based Protocols</title>
         <author initials="K" surname="Watsen" fullname='Kent Watsen' role="editor">
