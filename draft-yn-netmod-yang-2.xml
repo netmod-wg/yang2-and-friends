@@ -16,8 +16,7 @@
 <?rfc strict="yes"?>
 
 <rfc ipr="pre5378Trust200902" category="std" submissionType="IETF" consensus="true"
-  xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-2-latest"
-  number="0000"> <!-- adding 'number' removes page numbers from toc -->
+  xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-yn-netmod-yang-2-latest">
 
     <front>
     <title abbrev="YANG 2.0">The YANG 2.0 Data Modeling Language</title>
