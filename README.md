@@ -17,7 +17,7 @@ of Data Modeled with YANG).
 
 ## Build Artifacts and Diffs
 
-https://netmod-wg.github.io/yang2-and-friends
+https://netmod-wg.github.io/yang2
 
 GitHub workflow actions are used to automatically build, test, and
 publish the three drafts, in the `html`, `txt`, and `xml` formats.
@@ -33,7 +33,7 @@ The webpage also provide links to:
 
 All contributions are made using pull requests (PRs).
 
-Please see the [contributing](https://github.com/netmod-wg/yang2-and-friends/blob/main/CONTRIBUTING.md) page for details.
+Please see the [contributing](https://github.com/netmod-wg/yang2/blob/main/CONTRIBUTING.md) page for details.
 
 
 ## Command Line Usage
