@@ -1,15 +1,7 @@
-# YANG 2 and friends
+# YANG 2.0
 
-This is the repository for four documents:
-  - `draft-yn-netmod-yang-2`: The YANG 2.0 Data Modeling Language
-  - `draft-yn-netmod-yang-xml`: XML Encoding of Data Modeled with YANG
-  - `draft-yn-netmod-yang-proto`: Requirements for YANG-based Protocols
-  - `draft-yn-netconf-netconf-2`: Placeholder text for NETCONF-next.
-
-The first document is primary, the other documents are the "friends" ;)
-
-All documents are in the same repository so that a single GitHub pull
-request (PR) can update them together.
+This is the repository for the document `draft-yn-netmod-yang2`
+(The YANG 2.0 Data Modeling Language).
 
 The initial goal is to make the document not be XML or NETCONF specific,
 thus setting a baseline for subsequent changes.  This is accomplished by:
@@ -19,12 +11,8 @@ thus setting a baseline for subsequent changes.  This is accomplished by:
   - removing the "Example Usage" sections.
   - making remaining examples be both XML and JSON.
 
-XML-specific text moves to the new `yang-xml` document, which is
-modeled after RFC 7951 (JSON Encoding of Data Modeled with YANG).
-
-NETCONF-specific text moves to the `netconf-2` document, which is
-expected to be considered by the NETCONF WG to update RFC 6241.
-
+XML-specific text moves to `draft-yn-netmod-yang-xml` (XML Encoding
+of Data Modeled with YANG).
 
 
 ## Build Artifacts and Diffs
@@ -36,9 +24,9 @@ publish the three drafts, in the `html`, `txt`, and `xml` formats.
 This automation occur for both the `main` branch and every PR-branch.
 
 The webpage also provide links to:
-  - diff a PR-branch against the `main` branch.
+  - diff the `main` branch against RFC 7950.
   - diff the `main` branch against Datatracker.
-  - for yang2 only, diff `main` against RFC 7950.
+  - diff a PR-branch against the `main` branch.
 
 
 ## Contributing

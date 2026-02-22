@@ -491,7 +491,7 @@ could be encoded in NETCONF as:
         <section title="From Section 5.6.4 (Announcing Conformance Information in NETCONF)" anchor="announce">
     <t>
 A NETCONF server MUST announce the modules it implements (see
-<!-- FIXME after DT upload: <xref relative="implementing" target="I.D.yn-netmod-yang-2"/> -->
+<!-- FIXME after DT upload: <xref relative="implementing" target="I.D.yn-netmod-yang2"/> -->
 ) by implementing the YANG module
 &quot;ietf&#8209;yang&#8209;library&quot; defined in
 <xref target="RFC8525"/> and listing all implemented modules in
@@ -728,7 +728,7 @@ The &quot;insert&quot; attribute can take the values &quot;first&quot;, &quot;la
 and &quot;after&quot;.  If the value is &quot;before&quot; or &quot;after&quot;, the &quot;key&quot; attribute
 MUST also be used, to specify an existing element in the list.  The
 value of the &quot;key&quot; attribute is the key predicates of the full
-instance identifier (see <!-- FIXME after DT upload: <xref section="9.13" target="I.D.yn-netmod-yang-2"/> -->) for the list entry.
+instance identifier (see <!-- FIXME after DT upload: <xref section="9.13" target="I.D.yn-netmod-yang2"/> -->) for the list entry.
     </t>
     <t>
 If no &quot;insert&quot; attribute is present in the &quot;create&quot; operation, it

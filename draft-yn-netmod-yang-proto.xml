@@ -43,7 +43,7 @@
     <middle>
         <section title="Introduction">
             <t>This document defines the expected behavior for management protocols
-              claiming to implement YANG 2.0 <!--<xref target="I-D.yn-netmod-yang-2"/>--></t>
+              claiming to implement YANG 2.0 <!--<xref target="I-D.yn-netmod-yang2"/>--></t>
             <t>The document is presented in two parts: first there are cross-cutting
             requirements defined in <xref target="crosscut"/>, second there are
             YANG-specific behaviors defined in <xref target="behaviors"/>.</t>
