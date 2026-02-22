@@ -75,7 +75,7 @@ jobs:
           git checkout v2
       - name: Run idnits
         run: |
-          ./idnits/idnits --verbose draft-yn-netmod-yang-2-[0-9][0-9].txt | tee idnits.out
+          ./idnits/idnits --verbose draft-yn-netmod-yang2-[0-9][0-9].txt | tee idnits.out
       - name: Extract summary line
         run: echo "SUMMARY_LINE=$(cat idnits.out | tail -n 2 | head -n 1)" >> $GITHUB_ENV
       - name: Test summary line for errors
@@ -100,7 +100,7 @@ jobs:
 #      - name: Download a single artifact
 #        uses: actions/download-artifact@v4
 #        with:
-#          name: draft-yn-netmod-yang-2-[0-9][0-9].txt
+#          name: draft-yn-netmod-yang2-[0-9][0-9].txt
 #      - name: Install node
 #        run: |
 #          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -114,7 +114,7 @@ jobs:
 #          npm install -g @ietf-tools/idnits
 #      - name: Run idnits
 #        run: |
-#          idnits draft-yn-netmod-yang-2-[0-9][0-9].txt  | tee idnits.out
+#          idnits draft-yn-netmod-yang2-[0-9][0-9].txt  | tee idnits.out
 #      - name: Test idnits Output
 #        run: |
 #            grep -q "Summary: 1 error" idnits.out
